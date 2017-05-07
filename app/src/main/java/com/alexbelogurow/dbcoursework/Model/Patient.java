@@ -8,9 +8,17 @@ public class Patient {
     private Integer patientID, personID;
     private String location, job, bloodType, rhFactor, comments;
 
-    public Patient(Integer patientID, Integer personID, String location, String job, String bloodType, String rhFactor, String comments) {
+    public Patient(Integer patientID, Integer personID, String bloodType, String rhFactor, String location, String job,  String comments) {
         this.patientID = patientID;
         this.personID = personID;
+        this.location = location;
+        this.job = job;
+        this.bloodType = bloodType;
+        this.rhFactor = rhFactor;
+        this.comments = comments;
+    }
+
+    public Patient(String bloodType, String rhFactor, String location, String job,  String comments) {
         this.location = location;
         this.job = job;
         this.bloodType = bloodType;

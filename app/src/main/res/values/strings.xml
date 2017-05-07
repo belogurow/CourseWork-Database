@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">DBCourseWork</string>
+    <string name="title_activity_add_patient">Add Patient</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="blood_type">
+        <item>0</item>
+        <item>A</item>
+        <item>B</item>
+        <item>AB</item>
+    </string-array>
+
+    <string-array name="rh_factor">
+        <item>Positive</item>
+        <item>Negative</item>
+    </string-array>
 </resources>

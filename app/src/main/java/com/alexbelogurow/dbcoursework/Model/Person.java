@@ -16,6 +16,12 @@ public class Person {
         this.sex = sex;
     }
 
+    public Person(String fullName, String birthDate, String sex) {
+        this.fullName = fullName;
+        this.birthDate = birthDate;
+        this.sex = sex;
+    }
+
     public Integer getPersonID() {
         return personID;
     }

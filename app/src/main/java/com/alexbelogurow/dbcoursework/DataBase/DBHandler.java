@@ -2,11 +2,16 @@ package com.alexbelogurow.dbcoursework.DataBase;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.alexbelogurow.dbcoursework.Model.Patient;
 import com.alexbelogurow.dbcoursework.Model.Person;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by alexbelogurow on 07.05.17.
@@ -80,7 +85,7 @@ public class DBHandler extends SQLiteOpenHelper {
     // =======================================================================
     // Work with TABLE_PERSON
     // =======================================================================
-    private void addPerson(Person person) {
+    private Integer addPerson(Person person) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues personValues = new ContentValues();
@@ -88,22 +93,22 @@ public class DBHandler extends SQLiteOpenHelper {
         personValues.put(KEY_BIRTH_DATE, person.getBirthDate());
         personValues.put(KEY_SEX, person.getSex());
 
-        db.insert(TABLE_PERSON, null, personValues);
-
+        return (int) db.insert(TABLE_PERSON, null, personValues);
     }
+
+
 
 
     // =======================================================================
     // Work with TABLE_PATIENT
     // =======================================================================
     public void addPatient(Patient patient, Person person) {
-        addPerson(person);
+        Integer idPerson = addPerson(person);
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues patientValues = new ContentValues();
-        // TODO patientValues.put(KEY_PERSON_ID, person.getPersonID());
-        // TODO или добавить ID по последнему добавленному в PERSON
+        patientValues.put(KEY_PERSON_ID, idPerson);
         patientValues.put(KEY_BLOOD_TYPE, patient.getBloodType());
         patientValues.put(KEY_RH_FACTOR, patient.getRhFactor());
         patientValues.put(KEY_LOCATION, patient.getLocation());
@@ -112,5 +117,33 @@ public class DBHandler extends SQLiteOpenHelper {
 
         db.insert(TABLE_PATIENT, null, patientValues);
 
+    }
+
+    public List<Patient> getAllPatients() {
+        List<Patient> patientList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_PATIENT;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Patient patient = new Patient(
+                        Integer.parseInt(cursor.getString(0)),  // KEY_PATIENT_ID
+                        Integer.parseInt(cursor.getString(1)),  // KEY_PERSON_ID
+                        cursor.getString(2),                    // KEY_BLOOD_TYPE
+                        cursor.getString(3),                    // KEY_RH_FACTOR
+                        cursor.getString(4),                    // KEY_LOCATION
+                        cursor.getString(5),                    // KEY_JOB
+                        cursor.getString(6));                   // KEY_COMMENTS
+                patientList.add(patient);
+
+                Log.d("ADD", patient.toString());
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return patientList;
     }
 }

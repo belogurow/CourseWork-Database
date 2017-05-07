@@ -9,14 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.MainActivityPerson">
+        <activity android:name=".Activity.ActivityPatient">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.ActivityPatient"></activity>
+        <activity android:name=".Activity.MainActivityPerson" />
+
+        <activity
+            android:name=".Activity.ActivityAddPatient"
+            android:label="@string/title_activity_add_patient"
+            android:parentActivityName=".Activity.ActivityPatient"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.alexbelogurow.dbcoursework.Activity.ActivityPatient" />
+        </activity>
     </application>
 
 </manifest>
