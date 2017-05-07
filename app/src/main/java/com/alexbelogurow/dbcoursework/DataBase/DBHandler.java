@@ -1,8 +1,12 @@
 package com.alexbelogurow.dbcoursework.DataBase;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.alexbelogurow.dbcoursework.Model.Patient;
+import com.alexbelogurow.dbcoursework.Model.Person;
 
 /**
  * Created by alexbelogurow on 07.05.17.
@@ -76,10 +80,37 @@ public class DBHandler extends SQLiteOpenHelper {
     // =======================================================================
     // Work with TABLE_PERSON
     // =======================================================================
+    private void addPerson(Person person) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        ContentValues personValues = new ContentValues();
+        personValues.put(KEY_FULL_NAME, person.getFullName());
+        personValues.put(KEY_BIRTH_DATE, person.getBirthDate());
+        personValues.put(KEY_SEX, person.getSex());
+
+        db.insert(TABLE_PERSON, null, personValues);
+
+    }
 
 
     // =======================================================================
     // Work with TABLE_PATIENT
     // =======================================================================
+    public void addPatient(Patient patient, Person person) {
+        addPerson(person);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues patientValues = new ContentValues();
+        // TODO patientValues.put(KEY_PERSON_ID, person.getPersonID());
+        // TODO или добавить ID по последнему добавленному в PERSON
+        patientValues.put(KEY_BLOOD_TYPE, patient.getBloodType());
+        patientValues.put(KEY_RH_FACTOR, patient.getRhFactor());
+        patientValues.put(KEY_LOCATION, patient.getLocation());
+        patientValues.put(KEY_JOB, patient.getJob());
+        patientValues.put(KEY_COMMENTS, patient.getComments());
+
+        db.insert(TABLE_PATIENT, null, patientValues);
+
+    }
 }
