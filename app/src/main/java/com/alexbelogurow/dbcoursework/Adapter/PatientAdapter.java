@@ -1,6 +1,7 @@
 package com.alexbelogurow.dbcoursework.Adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,11 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alexbelogurow.dbcoursework.DataBase.DBHandler;
 import com.alexbelogurow.dbcoursework.Model.Patient;
+import com.alexbelogurow.dbcoursework.Model.Person;
 import com.alexbelogurow.dbcoursework.R;
 
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by alexbelogurow on 07.05.17.
@@ -36,13 +41,19 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
 
     public static class PatientViewHolder extends RecyclerView.ViewHolder {
         private CardView mCardView;
-        private TextView mTextViewPatientInfo;
+        private TextView mTextViewPatientInfoName,
+                mTextViewPatientInfoLocation,
+                mTextViewPatientInfoBirthDate;
+        private CircleImageView mCircleImageViewGender;
 
         public PatientViewHolder(View itemView) {
             super(itemView);
 
             mCardView = (CardView) itemView.findViewById(R.id.cardViewPatientInfo);
-            mTextViewPatientInfo = (TextView) itemView.findViewById(R.id.textViewPatientInfo);
+            mTextViewPatientInfoName = (TextView) itemView.findViewById(R.id.textViewPatientInfoName);
+            mTextViewPatientInfoLocation = (TextView) itemView.findViewById(R.id.textViewPatientInfoLocation);
+            mTextViewPatientInfoBirthDate = (TextView) itemView.findViewById(R.id.textViewPatientInfoBirthDate);
+            mCircleImageViewGender = (CircleImageView) itemView.findViewById(R.id.imageViewPatientInfoGender);
         }
     }
 
@@ -57,8 +68,16 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
 
     @Override
     public void onBindViewHolder(PatientViewHolder holder, int position) {
-        holder.mTextViewPatientInfo.setText(patientList.get(position).toString());
+        DBHandler dbhandler = new DBHandler(context);
+        Patient patient = patientList.get(position);
+        Person person = dbhandler.getPerson(patient.getPersonID());
 
+        holder.mTextViewPatientInfoName.setText(person.getFullName());
+        holder.mTextViewPatientInfoLocation.setText(patient.getLocation());
+        holder.mTextViewPatientInfoBirthDate.setText(person.getBirthDate());
+        holder.mCircleImageViewGender.setImageDrawable(
+                ContextCompat.getDrawable(context, person.getGenderPhotoID()));
+        dbhandler.close();
     }
 
     @Override

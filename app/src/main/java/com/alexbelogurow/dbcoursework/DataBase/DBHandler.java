@@ -96,7 +96,25 @@ public class DBHandler extends SQLiteOpenHelper {
         return (int) db.insert(TABLE_PERSON, null, personValues);
     }
 
-    
+    public Person getPerson(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_PERSON, new String[] {
+                KEY_PERSON_ID, KEY_FULL_NAME, KEY_BIRTH_DATE, KEY_SEX}, KEY_PERSON_ID + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        Person person = new Person(Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getString(3));
+
+        return person;
+
+    }
+
 
 
 
