@@ -26,8 +26,8 @@ public class NavigationDrawer {
     private int currentPosition;
 
     public NavigationDrawer(Activity activity, Toolbar toolbar, int currentPosition) {
-        mActivity = activity;
-        mToolbar = toolbar;
+        this.mActivity = activity;
+        this.mToolbar = toolbar;
         this.currentPosition = currentPosition;
     }
 
