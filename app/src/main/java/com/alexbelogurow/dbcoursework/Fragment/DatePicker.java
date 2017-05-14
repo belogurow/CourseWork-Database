@@ -47,6 +47,6 @@ public class DatePicker extends DialogFragment
     @Override
     public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
         TextView textViewDate = (TextView) getActivity().findViewById(R.id.textViewPatientDate);
-        textViewDate.setText(dayOfMonth + "-" + month + "-" + year);
+        textViewDate.setText(dayOfMonth + "/" + month + "/" + year);
     }
 }

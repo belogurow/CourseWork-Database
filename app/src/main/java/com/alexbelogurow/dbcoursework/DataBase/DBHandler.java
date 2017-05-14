@@ -96,6 +96,8 @@ public class DBHandler extends SQLiteOpenHelper {
         return (int) db.insert(TABLE_PERSON, null, personValues);
     }
 
+    
+
 
 
 
@@ -116,7 +118,9 @@ public class DBHandler extends SQLiteOpenHelper {
         patientValues.put(KEY_COMMENTS, patient.getComments());
 
         db.insert(TABLE_PATIENT, null, patientValues);
+        db.close();
 
+        Log.d("ADD", patient.toString());
     }
 
     public List<Patient> getAllPatients() {
@@ -138,7 +142,7 @@ public class DBHandler extends SQLiteOpenHelper {
                         cursor.getString(6));                   // KEY_COMMENTS
                 patientList.add(patient);
 
-                Log.d("ADD", patient.toString());
+                //Log.d("ADD", patient.toString());
             } while (cursor.moveToNext());
         }
 

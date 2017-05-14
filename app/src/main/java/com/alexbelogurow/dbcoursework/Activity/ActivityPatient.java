@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.alexbelogurow.dbcoursework.Adapter.PatientAdapter;
@@ -51,18 +52,12 @@ public class ActivityPatient extends AppCompatActivity {
             }
         });
 
-        //initializeDB();
         initializeAdapter();
     }
 
-    private void initializeDB() {
-        dbHandler.addPatient(new Patient("Moscow", "Driver", "A", "+", "qwerty"),
-                new Person("Tom", "21/02/1989", "male"));
-    }
 
     private void initializeAdapter() {
         patientList = dbHandler.getAllPatients();
-        //patientList = new ArrayList<>();
         mAdapter = new PatientAdapter(patientList, getApplicationContext());
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -87,5 +82,12 @@ public class ActivityPatient extends AppCompatActivity {
 
         // Initialize Stetho with the Initializer
         Stetho.initialize(initializer);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        mAdapter.updateList(dbHandler.getAllPatients());
     }
 }

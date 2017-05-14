@@ -29,6 +29,11 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
         this.context = context;
     }
 
+    public void updateList(List<Patient> newPatientList) {
+        patientList = newPatientList;
+        notifyDataSetChanged();
+    }
+
     public static class PatientViewHolder extends RecyclerView.ViewHolder {
         private CardView mCardView;
         private TextView mTextViewPatientInfo;
@@ -40,6 +45,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
             mTextViewPatientInfo = (TextView) itemView.findViewById(R.id.textViewPatientInfo);
         }
     }
+
 
     @Override
     public PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
