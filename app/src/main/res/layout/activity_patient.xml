@@ -7,10 +7,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.alexbelogurow.dbcoursework.Activity.ActivityPatient">
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarPatient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
+    </android.support.design.widget.AppBarLayout>
+
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recyclerViewPatient"/>
+        android:id="@+id/recyclerViewPatient"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabAddPatient"
@@ -19,5 +36,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add_patient"/>
+
 
 </android.support.design.widget.CoordinatorLayout>

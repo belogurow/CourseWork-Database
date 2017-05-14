@@ -3,6 +3,9 @@
     <string name="title_activity_add_patient">Add Patient</string>
     <string name="action_settings">Settings</string>
 
+    <string name="patients">Patients</string>
+    <string name="doctors">Doctors</string>
+
     <string-array name="blood_type">
         <item>0</item>
         <item>A</item>

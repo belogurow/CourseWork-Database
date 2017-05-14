@@ -4,20 +4,26 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.alexbelogurow.dbcoursework.Adapter.PatientAdapter;
 import com.alexbelogurow.dbcoursework.DataBase.DBHandler;
+import com.alexbelogurow.dbcoursework.Drawer.NavigationDrawer;
 import com.alexbelogurow.dbcoursework.Model.Patient;
-import com.alexbelogurow.dbcoursework.Model.Person;
 import com.alexbelogurow.dbcoursework.R;
 import com.facebook.stetho.Stetho;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityPatient extends AppCompatActivity {
@@ -27,6 +33,8 @@ public class ActivityPatient extends AppCompatActivity {
 
     private DBHandler dbHandler;
     private PatientAdapter mAdapter;
+
+    private Toolbar mToolbar;
 
     private List<Patient> patientList;
 
@@ -38,6 +46,12 @@ public class ActivityPatient extends AppCompatActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewPatient);
         mFabAddPatient = (FloatingActionButton) findViewById(R.id.fabAddPatient);
+        mToolbar = (Toolbar) findViewById(R.id.toolbarPatient);
+
+        setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(getResources().getString(R.string.patients));
+        }
 
         dbHandler = new DBHandler(getApplicationContext());
 
@@ -53,7 +67,9 @@ public class ActivityPatient extends AppCompatActivity {
         });
 
         initializeAdapter();
+        new NavigationDrawer(this, mToolbar, 0).setNavigationDrawer();
     }
+
 
 
     private void initializeAdapter() {
