@@ -200,7 +200,7 @@ public class DBHandler extends SQLiteOpenHelper {
         doctorValues.put(KEY_SPECIALIZATION, doctor.getSpecialization());
         doctorValues.put(KEY_PRACTICE_BEGAN_DATE, doctor.getPractiseBeganDate());
 
-        db.insert(TABLE_PATIENT, null, doctorValues);
+        db.insert(TABLE_DOCTOR, null, doctorValues);
         db.close();
 
         Log.d("ADD", doctor.toString());

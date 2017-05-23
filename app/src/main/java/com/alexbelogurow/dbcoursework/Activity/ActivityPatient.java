@@ -44,6 +44,9 @@ public class ActivityPatient extends AppCompatActivity {
         setContentView(R.layout.activity_patient);
         initializeStetho();
 
+        // FOR UPDATE DATABASE
+        // getApplicationContext().deleteDatabase("Hospital");
+
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewPatient);
         mFabAddPatient = (FloatingActionButton) findViewById(R.id.fabAddPatient);
         mToolbar = (Toolbar) findViewById(R.id.toolbarPatient);

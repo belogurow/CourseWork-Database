@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.alexbelogurow.dbcoursework">
+          package="com.alexbelogurow.dbcoursework">
 
     <application
         android:allowBackup="true"
@@ -9,16 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".Activity.ActivityPatient">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.MainActivityPerson" />
-
+        <activity android:name=".Activity.MainActivityPerson"/>
         <activity
             android:name=".Activity.ActivityAddPatient"
             android:label="@string/title_activity_add_patient"
@@ -26,9 +24,14 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.alexbelogurow.dbcoursework.Activity.ActivityPatient" />
+                android:value="com.alexbelogurow.dbcoursework.Activity.ActivityPatient"/>
         </activity>
-        <activity android:name=".Activity.ActivityDoctor"></activity>
+        <activity android:name=".Activity.ActivityDoctor"/>
+        <activity
+            android:name=".Activity.ActivityAddDoctor"
+            android:label="@string/title_activity_add_doctor"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>
