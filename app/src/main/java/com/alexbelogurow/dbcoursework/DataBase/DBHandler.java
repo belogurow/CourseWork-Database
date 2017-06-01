@@ -129,7 +129,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 cursor.getString(1),
                 cursor.getString(2),
                 cursor.getString(3));
-
+        cursor.close();
         return person;
 
     }

@@ -44,9 +44,7 @@ class ActivityDoctor : AppCompatActivity() {
         mRecyclerView = findViewById(R.id.recyclerViewDcotor) as RecyclerView
 
         setSupportActionBar(mToolbar)
-        if (supportActionBar != null) {
-            supportActionBar?.title = "Doctors"
-        }
+        supportActionBar?.title = "Doctors"
 
         NavigationDrawer(this, mToolbar, 1).setNavigationDrawer()
 

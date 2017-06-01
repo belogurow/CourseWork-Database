@@ -21,6 +21,8 @@ import java.util.Calendar;
 public class DatePicker extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
 
+    private String date;
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -48,5 +50,11 @@ public class DatePicker extends DialogFragment
     public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
         TextView textViewDate = (TextView) getActivity().findViewById(R.id.textViewPatientDate);
         textViewDate.setText(dayOfMonth + "/" + month + "/" + year);
+        date = dayOfMonth + "/" + month + "/" + year;
+    }
+
+
+    public String getDate() {
+        return date;
     }
 }

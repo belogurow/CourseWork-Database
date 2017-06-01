@@ -100,20 +100,20 @@ public class ActivityAddPatient extends AppCompatActivity {
 
     private void initializeFields() {
         mBirthDate = (TextView) findViewById(R.id.textViewPatientDate);
-        mEditTextPatientName = (EditText) findViewById(R.id.editTextPatientName);
+        mEditTextPatientName = (EditText) findViewById(R.id.editTextDoctorName);
         mEditTextPatientLocation = (EditText) findViewById(R.id.editTextPatientLocation);
         mEditTextPatientJob = (EditText) findViewById(R.id.editTextPatientJob);
         mEditTextPatientComments = (EditText) findViewById(R.id.editTextPatientComments);
 
-        mButtonPickBirthDate = (Button) findViewById(R.id.buttonPatientPickDate);
+        mButtonPickBirthDate = (Button) findViewById(R.id.buttonDoctorPickDate);
         mButtonAddPatient = (Button) findViewById(R.id.buttonAddPatient);
 
         mSpinnerBloodType = (Spinner) findViewById(R.id.spinnerBloodType);
         mSpinnerRhFactor = (Spinner) findViewById(R.id.spinnerRhFactor);
 
         mImageViewListGender = new ArrayList<>();
-        mImageViewListGender.add((CircleImageView) findViewById(R.id.imageViewPatientMale));
-        mImageViewListGender.add((CircleImageView) findViewById(R.id.imageViewPatientFemale));
+        mImageViewListGender.add((CircleImageView) findViewById(R.id.imageViewDoctorMale));
+        mImageViewListGender.add((CircleImageView) findViewById(R.id.imageViewDoctorFemale));
 
         mImageViewListGender.get(0).setTag(0);
         mImageViewListGender.get(1).setTag(1);
@@ -132,6 +132,7 @@ public class ActivityAddPatient extends AppCompatActivity {
             if (numberOfCurImage == 0) {
                 mImageViewListGender.get(0).setImageResource(R.drawable.ic_patient_male_on);
                 mImageViewListGender.get(1).setImageResource(R.drawable.ic_patient_female_off);
+
             }
 
             if (numberOfCurImage == 1) {

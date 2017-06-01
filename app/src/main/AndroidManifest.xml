@@ -30,6 +30,7 @@
         <activity
             android:name=".Activity.ActivityAddDoctor"
             android:label="@string/title_activity_add_doctor"
+            android:parentActivityName=".Activity.ActivityDoctor"
             android:theme="@style/AppTheme">
         </activity>
     </application>
