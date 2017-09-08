@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import com.alexbelogurow.dbcoursework.Activity.ActivityDiagnoses;
 import com.alexbelogurow.dbcoursework.Activity.ActivityDoctor;
 import com.alexbelogurow.dbcoursework.Activity.ActivityPatient;
 import com.alexbelogurow.dbcoursework.R;
@@ -83,6 +84,21 @@ public class NavigationDrawer {
                         }
                     });
 
+            PrimaryDrawerItem diagnoses = new PrimaryDrawerItem()
+                    .withIdentifier(2)
+                    .withName(R.string.diagnoses)
+                    .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                        @Override
+                        public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                            Intent intentDiagnosis = new Intent(
+                                    mActivity.getApplicationContext(),
+                                    ActivityDiagnoses.class);
+                            mActivity.startActivity(intentDiagnosis);
+
+                            return true;
+                        }
+                    });
+
             final Drawer drawerResult = new DrawerBuilder()
                     .withActivity(mActivity)
                     .withToolbar(mToolbar)
@@ -90,6 +106,7 @@ public class NavigationDrawer {
                     .addDrawerItems(
                             patients,
                             doctors,
+                            diagnoses,
                             new DividerDrawerItem()
                             //item2,
                             //item3

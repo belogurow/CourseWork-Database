@@ -25,6 +25,8 @@ import de.hdodenhof.circleimageview.CircleImageView
 
 class ActivityAddPatient : AppCompatActivity() {
 
+    private var EXTRA_PATIENT_ID = "PATIENT_ID"
+
     private var mToolbar: Toolbar? = null
     private var mBirthDate: TextView? = null
     private var mImageViewListGender: MutableList<CircleImageView>? = null
@@ -70,10 +72,11 @@ class ActivityAddPatient : AppCompatActivity() {
                     mEditTextPatientComments?.text.toString())
 
             val dbHandler = DBHandler(applicationContext)
-            dbHandler.addPatient(patient, person)
+            val patientID = dbHandler.addPatient(patient, person)
             dbHandler.close();
 
             val intentAddDoctor = Intent(this, ActivityAddDoctorForPatient::class.java)
+            intentAddDoctor.putExtra(EXTRA_PATIENT_ID, patientID)
             startActivity(intentAddDoctor)
         }
         /*

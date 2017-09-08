@@ -18,6 +18,9 @@ import com.alexbelogurow.dbcoursework.R
 class ActivityDoctor : AppCompatActivity() {
 
     private val TAG = "ActivityDoctor"
+    private val INFO_ABOUT_DOCTOR = 0
+    private val PATIENT_ID = -1
+
     private var mToolbar: Toolbar? = null
     private var mFabAddDoctor: FloatingActionButton? = null
     private var mRecyclerView: RecyclerView? = null
@@ -70,7 +73,7 @@ class ActivityDoctor : AppCompatActivity() {
     private fun initializeAdapter() {
         doctorsList = dbHandler?.allDoctors
         //TODO replace !!
-        mAdapter = DoctorAdapter(doctorsList!!, this)
+        mAdapter = DoctorAdapter(doctorsList!!, this, INFO_ABOUT_DOCTOR, PATIENT_ID)
         mRecyclerView?.adapter = mAdapter
     }
 

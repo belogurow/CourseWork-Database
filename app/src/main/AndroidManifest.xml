@@ -35,7 +35,9 @@
         </activity>
         <activity android:name=".Activity.ActivityAddDoctorForPatient">
         </activity>
-        <activity android:name=".Activity.ActivityDiagnosis">
+        <activity android:name=".Activity.ActivityDiagnoses">
+        </activity>
+        <activity android:name=".Activity.ActivityDoctorInfo">
         </activity>
     </application>
 

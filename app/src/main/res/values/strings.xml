@@ -3,8 +3,10 @@
     <string name="title_activity_add_patient">Add Patient</string>
     <string name="action_settings">Settings</string>
 
-    <string name="patients">Patients</string>
-    <string name="doctors">Doctors</string>
+
+    <string name="patients">Пациенты</string>
+    <string name="doctors">Доктора</string>
+    <string name="diagnoses">Диагнозы</string>
 
     <string-array name="blood_type">
         <item>0</item>
@@ -17,7 +19,7 @@
         <item>Positive</item>
         <item>Negative</item>
     </string-array>
-    <string name="title_activity_add_doctor">Add new Doctor</string>
+    <string name="title_activity_add_doctor">Добавить доктора</string>
 
     <!-- ActivityAddPatient -->
     <string name="add_doctor_for_patient">Добавить лечащего доктора</string>
