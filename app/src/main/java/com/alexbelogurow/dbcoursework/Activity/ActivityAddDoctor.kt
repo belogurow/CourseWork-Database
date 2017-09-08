@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.app.DatePickerDialog;
+import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.View
 import com.alexbelogurow.dbcoursework.DataBase.DBHandler
@@ -42,14 +43,14 @@ class ActivityAddDoctor : AppCompatActivity() {
         arrayOfGender?.plus(imageViewDoctorFemale)
 
         buttonDoctorPickDate.setOnClickListener {
-            val dateListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            val dateListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                 textViewDoctorDate.text = "$year/$month/$dayOfMonth"
             }
             DatePickerDialog(this, dateListener, 1990, Calendar.MONTH, Calendar.DAY_OF_MONTH).show()
         }
 
         buttonDoctorPractiseDate.setOnClickListener {
-            val dateListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            val dateListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                 textViewDoctorPractiseDate.text = "$year/$month/$dayOfMonth"
             }
             DatePickerDialog(this, dateListener, 2005, Calendar.MONTH, Calendar.DAY_OF_MONTH).show()
@@ -89,8 +90,8 @@ class ActivityAddDoctor : AppCompatActivity() {
             }
 
             Log.d("DEBUG", "$numberOfCurImage : $numberOfSecondImage")
-            arrayOfGender?.get(numberOfCurImage)?.borderColor = R.color.colorBorderOn
-            arrayOfGender?.get(numberOfSecondImage)?.borderColor = R.color.colorBorderOff
+            arrayOfGender?.get(numberOfCurImage)?.borderColor = ContextCompat.getColor(this, R.color.colorBorderOn)
+            arrayOfGender?.get(numberOfSecondImage)?.borderColor = ContextCompat.getColor(this, R.color.colorBorderOff)
         }
     }
 

@@ -21,6 +21,10 @@ import de.hdodenhof.circleimageview.CircleImageView
 class DoctorAdapter(private var doctorList: List<Doctor>, private val context: Context) :
         RecyclerView.Adapter<DoctorAdapter.DoctorViewHolder>() {
 
+    // NEXT ACTIVITY
+    private val INFO_ABOUT_DOCTOR = 0
+    private val INFO_ABOUT_PATIENT = 1;
+
     fun updateList(newDoctorList: List<Doctor>) {
         doctorList = newDoctorList
         notifyDataSetChanged()
@@ -31,8 +35,8 @@ class DoctorAdapter(private var doctorList: List<Doctor>, private val context: C
         var mTextViewDocName: TextView? = null
 
         init {
-            mCardView = itemView.findViewById(R.id.cardViewDoctorInfo) as CardView
-            mTextViewDocName = itemView.findViewById(R.id.textViewDoctorInfoName) as TextView
+            mCardView = itemView.findViewById(R.id.cardViewDoctorInfo)
+            mTextViewDocName = itemView.findViewById(R.id.textViewDoctorInfoName)
         }
     }
 

@@ -3,6 +3,7 @@ package com.alexbelogurow.dbcoursework.Drawer;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.alexbelogurow.dbcoursework.Activity.ActivityDoctor;
@@ -21,6 +22,8 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
  */
 
 public class NavigationDrawer {
+    private final static String TAG = NavigationDrawer.class.getSimpleName();
+
     private Activity mActivity;
     private Toolbar mToolbar;
     private int currentPosition;
@@ -93,5 +96,7 @@ public class NavigationDrawer {
                     )
                     .withSelectedItem(currentPosition)
                     .build();
+
+            Log.i(TAG, drawerResult.toString());
         }
 }

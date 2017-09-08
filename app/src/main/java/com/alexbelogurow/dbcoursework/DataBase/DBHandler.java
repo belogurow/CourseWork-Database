@@ -68,13 +68,16 @@ public class DBHandler extends SQLiteOpenHelper {
         final String createTablePatient = "CREATE TABLE " + TABLE_PATIENT + "(" +
                 KEY_PATIENT_ID + " INTEGER PRIMARY KEY, " +
                 KEY_PERSON_ID + " INTEGER, " +
+                KEY_DOCTOR_ID + " INTEGER, " +
                 KEY_BLOOD_TYPE + " TEXT, " +
                 KEY_RH_FACTOR + " TEXT, " +
                 KEY_LOCATION + " TEXT, " +
                 KEY_JOB + " TEXT, " +
                 KEY_COMMENTS + " TEXT, " +
                 "FOREIGN KEY (" + KEY_PERSON_ID + ") REFERENCES " +
-                TABLE_PERSON + "(" + KEY_PERSON_ID + "))";
+                TABLE_PERSON + "(" + KEY_PERSON_ID + ")," +
+                "FOREIGN KEY (" + KEY_DOCTOR_ID + ") REFERENCES " +
+                TABLE_DOCTOR + "(" + KEY_DOCTOR_ID + "))";
 
         final String createTableDoctor = "CREATE TABLE " + TABLE_DOCTOR + "(" +
                 KEY_DOCTOR_ID + " INTEGER PRIMARY KEY, " +
@@ -104,9 +107,7 @@ public class DBHandler extends SQLiteOpenHelper {
     // =======================================================================
     // Work with TABLE_PERSON
     // =======================================================================
-    private Integer addPerson(Person person) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
+    private Integer addPerson(Person person, SQLiteDatabase db) {
         ContentValues personValues = new ContentValues();
         personValues.put(KEY_FULL_NAME, person.getFullName());
         personValues.put(KEY_BIRTH_DATE, person.getBirthDate());
@@ -141,10 +142,10 @@ public class DBHandler extends SQLiteOpenHelper {
     // =======================================================================
     // Work with TABLE_PATIENT
     // =======================================================================
-    public void addPatient(Patient patient, Person person) {
-        Integer idPerson = addPerson(person);
-
+    public Integer addPatient(Patient patient, Person person) {
         SQLiteDatabase db = this.getWritableDatabase();
+
+        Integer idPerson = addPerson(person, db);
 
         ContentValues patientValues = new ContentValues();
         patientValues.put(KEY_PERSON_ID, idPerson);
@@ -154,10 +155,23 @@ public class DBHandler extends SQLiteOpenHelper {
         patientValues.put(KEY_JOB, patient.getJob());
         patientValues.put(KEY_COMMENTS, patient.getComments());
 
-        db.insert(TABLE_PATIENT, null, patientValues);
+        Integer idPatient = (int) db.insert(TABLE_PATIENT, null, patientValues);
+        db.close();
+        Log.d("Add new patient", patient.toString());
+
+        return idPatient;
+    }
+
+    public void addDoctorForPatient(Patient patient, Doctor doctor) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_DOCTOR_ID, doctor.getDoctorID());
+
+        db.insert(TABLE_PATIENT, null, contentValues);
         db.close();
 
-        Log.d("ADD", patient.toString());
+        Log.d("Add doctor for patient", doctor.toString());
     }
 
     public List<Patient> getAllPatients() {
@@ -172,11 +186,12 @@ public class DBHandler extends SQLiteOpenHelper {
                 Patient patient = new Patient(
                         Integer.parseInt(cursor.getString(0)),  // KEY_PATIENT_ID
                         Integer.parseInt(cursor.getString(1)),  // KEY_PERSON_ID
-                        cursor.getString(2),                    // KEY_BLOOD_TYPE
-                        cursor.getString(3),                    // KEY_RH_FACTOR
-                        cursor.getString(4),                    // KEY_LOCATION
-                        cursor.getString(5),                    // KEY_JOB
-                        cursor.getString(6));                   // KEY_COMMENTS
+                        Integer.parseInt(cursor.getString(2)),  // KEY_DOCTOR_ID
+                        cursor.getString(3),                    // KEY_BLOOD_TYPE
+                        cursor.getString(4),                    // KEY_RH_FACTOR
+                        cursor.getString(5),                    // KEY_LOCATION
+                        cursor.getString(6),                    // KEY_JOB
+                        cursor.getString(7));                   // KEY_COMMENTS
                 patientList.add(patient);
 
             } while (cursor.moveToNext());
@@ -191,9 +206,8 @@ public class DBHandler extends SQLiteOpenHelper {
     // Work with TABLE_DOCTOR
     // =======================================================================
     public void addDoctor(Doctor doctor, Person person) {
-        Integer idPerson = addPerson(person);
-
         SQLiteDatabase db = this.getWritableDatabase();
+        Integer idPerson = addPerson(person, db);
 
         ContentValues doctorValues = new ContentValues();
         doctorValues.put(KEY_PERSON_ID, idPerson);
@@ -203,7 +217,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.insert(TABLE_DOCTOR, null, doctorValues);
         db.close();
 
-        Log.d("ADD", doctor.toString());
+        Log.d("Add new doctor", doctor.toString());
     }
 
     public List<Doctor> getAllDoctors() {

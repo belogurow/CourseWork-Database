@@ -5,7 +5,7 @@ package com.alexbelogurow.dbcoursework.Model;
  */
 
 public class Patient {
-    private Integer patientID, personID;
+    private Integer patientID, personID, doctorID;
     private String location, job, bloodType, rhFactor, comments;
 
     public Patient(Integer patientID, Integer personID, String bloodType, String rhFactor, String location, String job,  String comments) {
@@ -24,6 +24,25 @@ public class Patient {
         this.bloodType = bloodType;
         this.rhFactor = rhFactor;
         this.comments = comments;
+    }
+
+    public Patient(Integer patientID, Integer personID, Integer doctorID, String bloodType, String rhFactor, String location, String job,  String comments) {
+        this.patientID = patientID;
+        this.personID = personID;
+        this.doctorID = doctorID;
+        this.location = location;
+        this.job = job;
+        this.bloodType = bloodType;
+        this.rhFactor = rhFactor;
+        this.comments = comments;
+    }
+
+    public Integer getDoctorID() {
+        return doctorID;
+    }
+
+    public void setDoctorID(Integer doctorID) {
+        this.doctorID = doctorID;
     }
 
     public Integer getPatientID() {

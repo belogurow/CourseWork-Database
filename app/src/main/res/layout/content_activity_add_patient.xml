@@ -181,13 +181,13 @@
             app:layout_constraintTop_toBottomOf="@+id/spinnerRhFactor" />
 
         <Button
-            android:id="@+id/buttonAddPatient"
+            android:id="@+id/button_add_doctor_for_patient"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
-            android:text="Add"
+            android:text="@string/add_doctor_for_patient"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextPatientComments" />

@@ -29,7 +29,7 @@ public class DatePicker extends DialogFragment
 
         final Calendar calendar = Calendar.getInstance();
         Dialog picker = new DatePickerDialog(getActivity(), this,
-                1990, calendar.MONTH, calendar.DAY_OF_MONTH);
+                1990, Calendar.MONTH, Calendar.DAY_OF_MONTH);
 
         picker.setTitle("Choose Birth Date");
         return picker;

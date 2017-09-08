@@ -33,6 +33,10 @@
             android:parentActivityName=".Activity.ActivityDoctor"
             android:theme="@style/AppTheme">
         </activity>
+        <activity android:name=".Activity.ActivityAddDoctorForPatient">
+        </activity>
+        <activity android:name=".Activity.ActivityDiagnosis">
+        </activity>
     </application>
 
 </manifest>
