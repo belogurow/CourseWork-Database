@@ -30,6 +30,7 @@ class ActivityDoctor : AppCompatActivity() {
 
     private var doctorsList: List<Doctor>? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_doctor)
@@ -46,7 +47,7 @@ class ActivityDoctor : AppCompatActivity() {
         mRecyclerView = findViewById(R.id.recyclerViewDcotor)
 
         setSupportActionBar(mToolbar)
-        supportActionBar?.title = "Doctors"
+        supportActionBar?.title = getString(R.string.doctors)
 
         if (supportActionBar == null) {
             Log.d(TAG, "null")
@@ -72,10 +73,10 @@ class ActivityDoctor : AppCompatActivity() {
 
     private fun initializeAdapter() {
         doctorsList = dbHandler?.allDoctors
-        //TODO replace !!
         mAdapter = DoctorAdapter(doctorsList!!, this, INFO_ABOUT_DOCTOR, PATIENT_ID)
         mRecyclerView?.adapter = mAdapter
     }
+
 
     override fun onRestart() {
         super.onRestart()

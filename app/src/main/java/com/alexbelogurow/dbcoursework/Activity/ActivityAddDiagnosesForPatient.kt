@@ -6,18 +6,18 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.widget.Toast
 import com.alexbelogurow.dbcoursework.Adapter.DiagnosesAdapter
 import com.alexbelogurow.dbcoursework.Adapter.DiagnosesAdapter2
 import com.alexbelogurow.dbcoursework.DataBase.DBHandler
-import com.alexbelogurow.dbcoursework.Drawer.NavigationDrawer
 import com.alexbelogurow.dbcoursework.Model.Diagnosis
 import com.alexbelogurow.dbcoursework.R
 
-class ActivityDiagnoses : AppCompatActivity() {
+class ActivityAddDiagnosesForPatient : AppCompatActivity() {
 
     private val TAG = "ActivityDiagnoses"
-    private val INFO_ABOUT_DIAGNOSIS = 0
-    private val PATIENT_ID = -1
+    private val ADD_DIAGNOSES_TO_PATIENT = 1;
+    private var EXTRA_PATIENT_ID = "PATIENT_ID"
 
     private var mToolbar: Toolbar? = null
     private var mFabAddDiagnosis: FloatingActionButton? = null
@@ -27,26 +27,27 @@ class ActivityDiagnoses : AppCompatActivity() {
     private var mAdapter: DiagnosesAdapter? = null
 
     private var diagnosisList: List<Diagnosis>? = null
+    private var patientId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_diagnosis)
 
         initializeFields()
-        initializeListeners()
         initializeAdapter()
     }
 
     private fun initializeFields() {
+        patientId = intent.getIntExtra(EXTRA_PATIENT_ID, -1)
+
         mToolbar = findViewById(R.id.toolbar_diagnosis)
         mFabAddDiagnosis = findViewById(R.id.fab_add_diagnosis)
         mRecyclerView = findViewById(R.id.recycler_diagnosis)
 
         setSupportActionBar(mToolbar)
-        supportActionBar?.title = getString(R.string.diagnoses)
+        supportActionBar?.title = getString(R.string.add_diagnoses_for_patient)
 
-        val drawer = NavigationDrawer(this, mToolbar, 2)
-        drawer.setNavigationDrawer()
+        mFabAddDiagnosis?.hide()
 
         dbHandler = DBHandler(this)
 
@@ -54,24 +55,12 @@ class ActivityDiagnoses : AppCompatActivity() {
         mRecyclerView?.setHasFixedSize(true)
     }
 
-    private fun initializeListeners() {
-        // TODO ADD LISTENER
-        mFabAddDiagnosis?.setOnClickListener {
-            //val addDoctorActivity = Intent(this, ActivityAddDoctor::class.java)
-            //startActivity(addDoctorActivity)
-        }
-    }
+
 
     private fun initializeAdapter() {
         diagnosisList = dbHandler?.allDiagnosis
-        mAdapter = DiagnosesAdapter(diagnosisList!!, this, INFO_ABOUT_DIAGNOSIS, PATIENT_ID)
+        mAdapter = DiagnosesAdapter(diagnosisList!!, this, ADD_DIAGNOSES_TO_PATIENT, patientId!!)
         mRecyclerView?.adapter = mAdapter
 
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        //TODO replace !!
-        mAdapter?.updateList(dbHandler?.allDiagnosis!!)
     }
 }

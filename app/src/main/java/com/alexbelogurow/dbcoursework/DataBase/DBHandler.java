@@ -301,7 +301,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_DIAGNOSIS_NAME, diagnosis.getName());
         values.put(KEY_IS_CONFIRMED, diagnosis.getIsConfirmed());
 
-        db.insert(TABLE_DIAGNOSIS, null, values);
+        db.insertWithOnConflict(TABLE_DIAGNOSIS, null, values, SQLiteDatabase.CONFLICT_IGNORE);
         db.close();
 
         Log.d("Add new diagnosis", diagnosis.toString());

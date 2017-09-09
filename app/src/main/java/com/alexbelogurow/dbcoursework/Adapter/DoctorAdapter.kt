@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import com.alexbelogurow.dbcoursework.Activity.ActivityAddDiagnosesForPatient
 import com.alexbelogurow.dbcoursework.Activity.ActivityDiagnoses
 import com.alexbelogurow.dbcoursework.Activity.ActivityDoctorInfo
 import com.alexbelogurow.dbcoursework.DataBase.DBHandler
@@ -80,9 +81,8 @@ class DoctorAdapter(private var doctorList: List<Doctor>,
                     val patient = dbHandler.getPatient(patientId)
                     dbHandler.addDoctorForPatient(patient, doctor)
 
-                    val intentAddDiagnosis = Intent(context, ActivityDiagnoses::class.java)
+                    val intentAddDiagnosis = Intent(context, ActivityAddDiagnosesForPatient::class.java)
                     intentAddDiagnosis.putExtra(EXTRA_PATIENT_ID, patientId)
-                    intentAddDiagnosis.putExtra(EXTRA_DOCTOR_ID, doctor.doctorID)
                     context.startActivity(intentAddDiagnosis)
                 }
                 else                    -> {

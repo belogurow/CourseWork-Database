@@ -27,11 +27,11 @@ class ActivityAddDoctor : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_doctor)
 
-        initializeViews()
+        initializeFields()
         initializeListeners()
     }
 
-    private fun initializeViews() {
+    private fun initializeFields() {
         setSupportActionBar(toolbarAddDoctor)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
