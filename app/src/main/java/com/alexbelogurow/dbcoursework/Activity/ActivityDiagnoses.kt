@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import com.alexbelogurow.dbcoursework.Adapter.DiagnosesAdapter
-import com.alexbelogurow.dbcoursework.Adapter.DiagnosesAdapter2
 import com.alexbelogurow.dbcoursework.DataBase.DBHandler
 import com.alexbelogurow.dbcoursework.Drawer.NavigationDrawer
 import com.alexbelogurow.dbcoursework.Model.Diagnosis

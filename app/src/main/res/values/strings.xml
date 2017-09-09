@@ -6,6 +6,17 @@
     <string name="patients">Пациенты</string>
     <string name="doctors">Врачи</string>
     <string name="diagnoses">Диагнозы</string>
+    <string name="name">ФИО</string>
+    <string name="specialization">Специализация</string>
+    <string name="birth_date">Дата рождения</string>
+    <string name="practise_began_date">Дата выхода на работу</string>
+    <string name="pick">Выбрать</string>
+    <string name="address">Адрес</string>
+    <string name="job">Работа</string>
+    <string name="blood_type">Группа крови</string>
+    <string name="rh_factor">Резус фактор</string>
+    <string name="comments">Комментарии</string>
+
 
     <string-array name="blood_type">
         <item>0</item>
@@ -22,10 +33,12 @@
 
     <!-- ActivityAddDoctor -->
     <string name="title_activity_add_doctor">Добавить врача</string>
+    <string name="doctor_was_added">Врач был добавлен</string>
 
 
     <!-- ActivityAddPatient -->
     <string name="title_activity_add_patient">Добавить пациента</string>
     <string name="add_doctor_for_patient">Добавить лечащего доктора</string>
     <string name="add_diagnoses_for_patient">Добавить диангоз(ы)</string>
+    <string name="patient_was_added">Пациент был добавлен</string>
 </resources>

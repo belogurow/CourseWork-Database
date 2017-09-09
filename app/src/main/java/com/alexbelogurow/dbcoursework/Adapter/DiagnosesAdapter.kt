@@ -2,15 +2,18 @@ package com.alexbelogurow.dbcoursework.Adapter
 
 import android.content.Context
 import android.graphics.Color
+import android.support.v7.view.menu.MenuView
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
+import com.alexbelogurow.dbcoursework.Activity.ActivityAddDiagnosesForPatient
 import com.alexbelogurow.dbcoursework.DataBase.DBHandler
 import com.alexbelogurow.dbcoursework.Model.Diagnosis
 import com.alexbelogurow.dbcoursework.R
@@ -28,6 +31,12 @@ class DiagnosesAdapter(private var diagnosesList: List<Diagnosis>,
     private val INFO_ABOUT_DIAGNOSIS = 0
     private val ADD_DIAGNOSIS_TO_PATIENT = 1
 
+    private var buttonDone: MenuItem? = null
+    private var countOfSelection = 0
+
+    fun setButtonDone(buttonDone: MenuItem?) {
+        this.buttonDone = buttonDone
+    }
     fun updateList(newDiagnosesList: List<Diagnosis>) {
         diagnosesList = newDiagnosesList
         notifyDataSetChanged()
@@ -88,8 +97,10 @@ class DiagnosesAdapter(private var diagnosesList: List<Diagnosis>,
 
         if (diagnosis.isSelected) {
             holder.itemView.setBackgroundColor(Color.LTGRAY)
+            buttonDone?.isVisible = countOfSelection > 0
         } else {
             holder.itemView.setBackgroundColor(Color.WHITE)
+            buttonDone?.isVisible = countOfSelection > 0
         }
 
         holder.mCardView?.setOnClickListener {
@@ -99,8 +110,15 @@ class DiagnosesAdapter(private var diagnosesList: List<Diagnosis>,
                     // TODO ADD TRANSITION TO DIAGNOSES INFO
                 }
                 ADD_DIAGNOSIS_TO_PATIENT    ->  {
-                    Log.d("position", "$position")
                     diagnosis.isSelected = !diagnosis.isSelected
+
+                    if (diagnosis.isSelected) {
+                        countOfSelection++
+                    } else {
+                        countOfSelection--
+                    }
+
+                    Log.d("position", "$position + $countOfSelection + $buttonDone")
                     notifyItemChanged(position)
                 }
             }

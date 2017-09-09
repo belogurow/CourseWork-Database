@@ -69,9 +69,17 @@ class ActivityAddDoctor : AppCompatActivity() {
             dbHandler.addDoctor(doctor, person)
             dbHandler.close()
 
-            Snackbar.make(coordLayoutAddDoctor, "New doctor was added", Snackbar.LENGTH_SHORT).show()
-            // TODO add onBackPressed
+            Snackbar.make(coordinator_add_doctor,
+                        getString(R.string.doctor_was_added),
+                        Snackbar.LENGTH_SHORT)
+                    .addCallback(object: Snackbar.Callback() {
+                        override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                            super.onDismissed(transientBottomBar, event)
 
+                            finish()
+                        }
+                    })
+                    .show()
         }
     }
 

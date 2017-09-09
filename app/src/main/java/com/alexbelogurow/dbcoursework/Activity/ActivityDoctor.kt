@@ -84,4 +84,6 @@ class ActivityDoctor : AppCompatActivity() {
         mAdapter?.updateList(dbHandler?.allDoctors!!)
     }
 
+
+
 }

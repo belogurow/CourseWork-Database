@@ -32,7 +32,8 @@ public class DBHandler extends SQLiteOpenHelper {
             TABLE_PATIENT = "Patient",
             TABLE_TREATMENT = "Treatment",
             TABLE_DIAGNOSIS = "Diagnosis",
-            TABLE_DOCTOR = "Doctor";
+            TABLE_DOCTOR = "Doctor",
+            TABLE_PATIENT_WITH_DIAGNOSIS = "PatientWithDiagnosis";
 
     // Common column names
     private static final String KEY_PERSON_ID = "personID",
@@ -99,12 +100,21 @@ public class DBHandler extends SQLiteOpenHelper {
                 KEY_DIAGNOSIS_NAME + " TEXT, " +
                 KEY_IS_CONFIRMED + " INTEGER " + ")";
 
+        final String createTablePatientWithTags = "CREATE TABLE " + TABLE_PATIENT_WITH_DIAGNOSIS + "(" +
+                KEY_PATIENT_ID + " INTEGER, " +
+                KEY_ICD + " TEXT, " +
+                "FOREIGN KEY (" + KEY_PATIENT_ID + ") REFERENCES " +
+                TABLE_PATIENT + "(" + KEY_PATIENT_ID + ")," +
+                "FOREIGN KEY (" + KEY_ICD + ") REFERENCES " +
+                TABLE_DIAGNOSIS + "(" + KEY_ICD + "))";
+
 
         // TODO add createTablePatient and other
         db.execSQL(createTablePerson);
         db.execSQL(createTablePatient);
         db.execSQL(createTableDoctor);
         db.execSQL(createTableDiagnosis);
+        db.execSQL(createTablePatientWithTags);
     }
 
     @Override
@@ -113,6 +123,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PATIENT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DOCTOR);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DIAGNOSIS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PATIENT_WITH_DIAGNOSIS);
 
 
         onCreate(db);
@@ -327,5 +338,21 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return diagnosisList;
+    }
+
+    // =======================================================================
+    // Work with TABLE_PATIENT_WITH_DIAGNOSIS
+    // =======================================================================
+    public void addDiagnosisForPatient(Diagnosis diagnosis, Integer patientId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_PATIENT_ID, patientId);
+        values.put(KEY_ICD, diagnosis.getICD());
+
+        db.insertWithOnConflict(TABLE_PATIENT_WITH_DIAGNOSIS, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+        db.close();
+
+        Log.d("Add diagnosis patient", diagnosis.getICD() + " " + patientId);
     }
 }
