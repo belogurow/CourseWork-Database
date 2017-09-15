@@ -1,6 +1,7 @@
 package com.alexbelogurow.dbcoursework.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alexbelogurow.dbcoursework.Activity.ActivityPatientInfo;
 import com.alexbelogurow.dbcoursework.DataBase.DBHandler;
 import com.alexbelogurow.dbcoursework.Model.Patient;
 import com.alexbelogurow.dbcoursework.Model.Person;
@@ -24,6 +26,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientViewHolder> {
+
+    // EXTRA
+    private final String EXTRA_PATIENT_ID = "PATIENT_ID";
 
     private List<Patient> patientList;
     private Context context;
@@ -61,15 +66,13 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
     @Override
     public PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.patient_item, parent, false);
-        PatientViewHolder patientViewHolder = new PatientViewHolder(view);
-
-        return patientViewHolder;
+        return new PatientViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(PatientViewHolder holder, int position) {
         DBHandler dbhandler = new DBHandler(context);
-        Patient patient = patientList.get(position);
+        final Patient patient = patientList.get(position);
         Person person = dbhandler.getPerson(patient.getPersonID());
 
         holder.mTextViewPatientInfoName.setText(person.getFullName());
@@ -78,6 +81,15 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
         holder.mCircleImageViewGender.setImageDrawable(
                 ContextCompat.getDrawable(context, person.getGenderPhotoID()));
         dbhandler.close();
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent patientInfoActivity = new Intent(context, ActivityPatientInfo.class);
+                patientInfoActivity.putExtra(EXTRA_PATIENT_ID, patient.getPatientID());
+                context.startActivity(patientInfoActivity);
+            }
+        });
     }
 
     @Override

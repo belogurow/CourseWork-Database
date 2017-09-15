@@ -277,6 +277,28 @@ public class DBHandler extends SQLiteOpenHelper {
         Log.d("Add new doctor", doctor.toString());
     }
 
+    public Doctor getDoctor(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_DOCTOR, new String[] {
+                KEY_DOCTOR_ID, KEY_PERSON_ID, KEY_SPECIALIZATION, KEY_PRACTICE_BEGAN_DATE}, KEY_DOCTOR_ID + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        Doctor doctor = new Doctor(
+                cursor.getInt(0),       // KEY_DOCTOR_ID
+                cursor.getInt(1),       // KEY_PERSON_ID
+                cursor.getString(2),    // KET_SPECIALIZATION
+                cursor.getString(3));   // KEY_PRACTICE_BEGAN_DATE
+
+        cursor.close();
+        db.close();
+
+        return doctor;
+    }
+
     public List<Doctor> getAllDoctors() {
         List<Doctor> doctorList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_DOCTOR;
@@ -340,6 +362,35 @@ public class DBHandler extends SQLiteOpenHelper {
         return diagnosisList;
     }
 
+    public Diagnosis getDiagnosis(String ICD) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Diagnosis diagnosis = null;
+
+//        Cursor cursor = db.query(TABLE_DOCTOR, new String[] {
+//                        KEY_DOCTOR_ID, KEY_PERSON_ID, KEY_SPECIALIZATION, KEY_PRACTICE_BEGAN_DATE}, KEY_DOCTOR_ID + "=?",
+//                new String[] { String.valueOf(id) }, null, null, null, null);
+//        if (cursor != null) {
+//            cursor.moveToFirst();
+
+        Cursor cursor = db.query(TABLE_DIAGNOSIS, new String[] {
+                KEY_ICD, KEY_DIAGNOSIS_NAME, KEY_IS_CONFIRMED}, KEY_ICD + "=?",
+                new String[] { ICD }, null, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+
+            diagnosis = new Diagnosis(
+                    cursor.getString(0),        // KEY_ICD
+                    cursor.getString(1),        // KEY_DIAGNOSIS_NAME
+                    cursor.getInt(2));          // KEY_IS_CONFIRMED
+        }
+
+
+        cursor.close();
+        db.close();
+        return diagnosis;
+    }
+
     // =======================================================================
     // Work with TABLE_PATIENT_WITH_DIAGNOSIS
     // =======================================================================
@@ -354,5 +405,27 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
 
         Log.d("Add diagnosis patient", diagnosis.getICD() + " " + patientId);
+    }
+
+    public List<Diagnosis> getDiagnosisByPatient(Patient patient) {
+        List<Diagnosis> diagnosisList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_PATIENT_WITH_DIAGNOSIS, new String[] {
+                KEY_PATIENT_ID, KEY_ICD}, KEY_PATIENT_ID + "=?",
+                new String[] { String.valueOf(patient.getPatientID()) }, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Log.d("Patient diag", cursor.toString());
+                Diagnosis diagnosis = getDiagnosis(cursor.getString(1));
+                diagnosisList.add(diagnosis);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return diagnosisList;
     }
 }

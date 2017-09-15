@@ -113,4 +113,16 @@ public class Patient {
                 ", comments='" + comments + '\'' +
                 '}';
     }
+
+    public String getPatientInfo() {
+        return location + "\n" +
+                job + "\n" +
+                comments;
+
+    }
+
+    public String getPatientMedicalInfo() {
+        return "Группа Крови - " + bloodType + "\n" +
+                "Резус Фактор - " + rhFactor;
+    }
 }
