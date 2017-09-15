@@ -1,6 +1,7 @@
 package com.alexbelogurow.dbcoursework.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.support.v7.view.menu.MenuView
 import android.support.v7.widget.CardView
@@ -14,6 +15,7 @@ import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import com.alexbelogurow.dbcoursework.Activity.ActivityAddDiagnosesForPatient
+import com.alexbelogurow.dbcoursework.Activity.ActivityDiagnosesInfo
 import com.alexbelogurow.dbcoursework.DataBase.DBHandler
 import com.alexbelogurow.dbcoursework.Model.Diagnosis
 import com.alexbelogurow.dbcoursework.R
@@ -30,6 +32,9 @@ class DiagnosesAdapter(private var diagnosesList: List<Diagnosis>,
     // NEXT ACTIVITY
     private val INFO_ABOUT_DIAGNOSIS = 0
     private val ADD_DIAGNOSIS_TO_PATIENT = 1
+
+    // EXTRA
+    private val EXTRA_ICD = "ICD"
 
     private var buttonDone: MenuItem? = null
     private var countOfSelection = 0
@@ -108,6 +113,9 @@ class DiagnosesAdapter(private var diagnosesList: List<Diagnosis>,
             when (nextActivity) {
                 INFO_ABOUT_DIAGNOSIS        ->  {
                     // TODO ADD TRANSITION TO DIAGNOSES INFO
+                    val diagnosisInfoIntent = Intent(context, ActivityDiagnosesInfo::class.java)
+                    diagnosisInfoIntent.putExtra(EXTRA_ICD, diagnosis.icd)
+                    context.startActivity(diagnosisInfoIntent)
                 }
                 ADD_DIAGNOSIS_TO_PATIENT    ->  {
                     diagnosis.isSelected = !diagnosis.isSelected

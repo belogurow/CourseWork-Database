@@ -109,7 +109,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 TABLE_DIAGNOSIS + "(" + KEY_ICD + "))";
 
 
-        // TODO add createTablePatient and other
+        // add createTablePatient and other
         db.execSQL(createTablePerson);
         db.execSQL(createTablePatient);
         db.execSQL(createTableDoctor);
@@ -160,10 +160,6 @@ public class DBHandler extends SQLiteOpenHelper {
         return person;
 
     }
-
-
-
-
 
     // =======================================================================
     // Work with TABLE_PATIENT
@@ -229,6 +225,36 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return patient;
+    }
+
+    public List<Patient> getPatientsByDoctor(Doctor doctor) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Patient> patientList = new ArrayList<>();
+
+        Cursor cursor = db.query(TABLE_PATIENT, new String[] {
+                        KEY_PATIENT_ID, KEY_PERSON_ID, KEY_DOCTOR_ID, KEY_BLOOD_TYPE, KEY_RH_FACTOR, KEY_LOCATION,
+                        KEY_JOB, KEY_COMMENTS}, KEY_DOCTOR_ID + "=?",
+                new String[] { String.valueOf(doctor.getDoctorID()) }, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Patient patient = new Patient(
+                        Integer.parseInt(cursor.getString(0)),  // KEY_PATIENT_ID
+                        Integer.parseInt(cursor.getString(1)),  // KEY_PERSON_ID
+                        Integer.parseInt(cursor.getString(2)),  // KEY_DOCTOR_ID
+                        cursor.getString(3),                    // KEY_BLOOD_TYPE
+                        cursor.getString(4),                    // KEY_RH_FACTOR
+                        cursor.getString(5),                    // KEY_LOCATION
+                        cursor.getString(6),                    // KEY_JOB
+                        cursor.getString(7));                   // KEY_COMMENTS
+                patientList.add(patient);
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return patientList;
     }
 
     public List<Patient> getAllPatients() {
@@ -303,7 +329,7 @@ public class DBHandler extends SQLiteOpenHelper {
         List<Doctor> doctorList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_DOCTOR;
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
@@ -344,7 +370,7 @@ public class DBHandler extends SQLiteOpenHelper {
         List<Diagnosis> diagnosisList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_DIAGNOSIS;
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
@@ -363,14 +389,8 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public Diagnosis getDiagnosis(String ICD) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         Diagnosis diagnosis = null;
-
-//        Cursor cursor = db.query(TABLE_DOCTOR, new String[] {
-//                        KEY_DOCTOR_ID, KEY_PERSON_ID, KEY_SPECIALIZATION, KEY_PRACTICE_BEGAN_DATE}, KEY_DOCTOR_ID + "=?",
-//                new String[] { String.valueOf(id) }, null, null, null, null);
-//        if (cursor != null) {
-//            cursor.moveToFirst();
 
         Cursor cursor = db.query(TABLE_DIAGNOSIS, new String[] {
                 KEY_ICD, KEY_DIAGNOSIS_NAME, KEY_IS_CONFIRMED}, KEY_ICD + "=?",

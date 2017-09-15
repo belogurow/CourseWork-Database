@@ -80,7 +80,6 @@ class ActivityDoctor : AppCompatActivity() {
 
     override fun onRestart() {
         super.onRestart()
-        //TODO replace !!
         mAdapter?.updateList(dbHandler?.allDoctors!!)
     }
 

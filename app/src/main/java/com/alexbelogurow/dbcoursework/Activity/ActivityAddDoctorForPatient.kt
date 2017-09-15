@@ -58,7 +58,6 @@ class ActivityAddDoctorForPatient : AppCompatActivity() {
 
     private fun initializeAdapter() {
         doctorsList = dbHandler?.allDoctors
-        //TODO replace !!
         mAdapter = DoctorAdapter(doctorsList!!, this, ADD_DOCTOR_TO_PATIENT, patientId!!)
         mRecyclerView?.adapter = mAdapter
     }

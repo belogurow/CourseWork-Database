@@ -38,19 +38,21 @@
         </activity>
         <activity android:name=".Activity.ActivityDiagnoses">
         </activity>
-
         <activity
             android:name=".Activity.ActivityDoctorInfo"
             android:label="@string/title_activity_doctor_info"
             android:theme="@style/AppTheme">
         </activity>
-
         <activity android:name=".Activity.ActivityAddDiagnosesForPatient">
         </activity>
-
         <activity
             android:name=".Activity.ActivityPatientInfo"
             android:label="@string/patient"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity
+            android:name=".Activity.ActivityDiagnosesInfo"
+            android:label="@string/title_activity_diagnoses_info"
             android:theme="@style/AppTheme">
         </activity>
     </application>
