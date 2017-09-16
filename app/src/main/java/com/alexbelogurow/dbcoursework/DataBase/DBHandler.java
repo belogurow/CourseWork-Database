@@ -286,6 +286,34 @@ public class DBHandler extends SQLiteOpenHelper {
         return patientList;
     }
 
+    public List<Patient> getPatientBySearch(String text) {
+        List<Patient> patientList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT " +
+                TABLE_PERSON + "." + KEY_PERSON_ID + ", " +
+                TABLE_PATIENT + "." + KEY_PATIENT_ID + ", " +
+                TABLE_PERSON + "." + KEY_FULL_NAME + " FROM " +
+                TABLE_PERSON + " INNER JOIN " + TABLE_PATIENT +
+                " WHERE (" +
+                TABLE_PERSON + "." + KEY_PERSON_ID + " = " +
+                TABLE_PATIENT + "." + KEY_PERSON_ID + " and " +
+                TABLE_PERSON + "." + KEY_FULL_NAME + " LIKE \'" + text + "%\')";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                patientList.add(getPatient(cursor.getInt(1)));
+                Log.d("DB", cursor.getString(2));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return patientList;
+    }
+
     // =======================================================================
     // Work with TABLE_DOCTOR
     // =======================================================================
