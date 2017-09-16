@@ -138,6 +138,7 @@ public class DBHandler extends SQLiteOpenHelper {
         personValues.put(KEY_BIRTH_DATE, person.getBirthDate());
         personValues.put(KEY_SEX, person.getSex());
 
+        Log.d("DB Add new person", person.toString());
         return (int) db.insert(TABLE_PERSON, null, personValues);
     }
 
@@ -349,6 +350,34 @@ public class DBHandler extends SQLiteOpenHelper {
         return doctorList;
     }
 
+    public List<Doctor> getDoctorBySearch(String text) {
+        List<Doctor> doctorsList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT " +
+                TABLE_PERSON + "." + KEY_PERSON_ID + ", " +
+                TABLE_DOCTOR + "." + KEY_DOCTOR_ID + ", " +
+                TABLE_PERSON + "." + KEY_FULL_NAME + " FROM " +
+                TABLE_PERSON + " INNER JOIN " + TABLE_DOCTOR +
+                " WHERE (" +
+                TABLE_PERSON + "." + KEY_PERSON_ID + " = " +
+                TABLE_DOCTOR + "." + KEY_PERSON_ID + " and " +
+                TABLE_PERSON + "." + KEY_FULL_NAME + " LIKE \'" + text + "%\')";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                doctorsList.add(getDoctor(cursor.getInt(1)));
+                Log.d("DB", cursor.getString(2));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return doctorsList;
+    }
+
     // =======================================================================
     // Work with TABLE_DIAGNOSIS
     // =======================================================================
@@ -437,7 +466,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                Log.d("Patient diag", cursor.toString());
+                //Log.d("Patient diag", cursor.toString());
                 Diagnosis diagnosis = getDiagnosis(cursor.getString(1));
                 diagnosisList.add(diagnosis);
             } while (cursor.moveToNext());

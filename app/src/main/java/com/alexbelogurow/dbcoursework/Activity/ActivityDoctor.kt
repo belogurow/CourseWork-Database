@@ -8,12 +8,20 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.util.Log
+import android.view.Menu
 import com.alexbelogurow.dbcoursework.Adapter.DoctorAdapter
 import com.alexbelogurow.dbcoursework.DataBase.DBHandler
 
 import com.alexbelogurow.dbcoursework.Drawer.NavigationDrawer
 import com.alexbelogurow.dbcoursework.Model.Doctor
 import com.alexbelogurow.dbcoursework.R
+import android.app.SearchManager
+import android.content.Context
+import android.widget.SearchView
+import android.support.v4.widget.SearchViewCompat.setOnQueryTextListener
+
+
+
 
 class ActivityDoctor : AppCompatActivity() {
 
@@ -83,6 +91,34 @@ class ActivityDoctor : AppCompatActivity() {
         mAdapter?.updateList(dbHandler?.allDoctors!!)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_activity_doctor, menu)
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = menu?.findItem(R.id.menu_action_doctor_search)?.actionView as SearchView
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+
+        searchView.setSearchableInfo(searchManager.
+                getSearchableInfo(componentName))
+        searchView.isSubmitButtonEnabled = true
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(text: String?): Boolean {
+                doctorsList = dbHandler?.getDoctorBySearch(text)
+                mAdapter?.updateList(doctorsList!!)
+                return true
+            }
+
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+        })
+
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
 
 
 }
+

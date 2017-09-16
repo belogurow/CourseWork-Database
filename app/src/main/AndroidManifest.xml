@@ -27,7 +27,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.alexbelogurow.dbcoursework.Activity.ActivityPatient"/>
         </activity>
-        <activity android:name=".Activity.ActivityDoctor"/>
+
+        <activity
+            android:name=".Activity.ActivityDoctor">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable">
+            </meta-data>
+        </activity>
+
         <activity
             android:name=".Activity.ActivityAddDoctor"
             android:label="@string/title_activity_add_doctor"

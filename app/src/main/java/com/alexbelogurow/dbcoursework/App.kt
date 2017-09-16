@@ -34,23 +34,23 @@ class App: Application() {
 
         dbHandler.addDoctor(
                 Doctor("Акушерка","2013/4/27"),
-                Person("Мамонтова Алевтина Лукьяновна", "1972/11/3", "Male")
+                Person("Мамонтова Алевтина Лукьяновна", "1972/11/3", "Female")
         )
         dbHandler.addDoctor(
                 Doctor("Анестезиолог", "2015/3/13"),
-                Person("Козлов Никита Глебович", "1941/2/25", "Female")
+                Person("Козлов Никита Глебович", "1941/2/25", "Male")
         )
         dbHandler.addDoctor(
                 Doctor("Диетолог", "2007/1/10"),
-                Person("Логинов Семён Геннадьевич", "1981/0/18", "Female")
+                Person("Логинов Семён Геннадьевич", "1981/0/18", "Male")
         )
         dbHandler.addDoctor(
                 Doctor("Кардиохирург", "2010/4/4"),
-                Person("Якушев Николай Георгьевич", "1963/5/7", "Female")
+                Person("Якушев Николай Георгьевич", "1963/5/7", "Male")
         )
         dbHandler.addDoctor(
                 Doctor("Онколог-хирург", "1999/2/7"),
-                Person("Лазарев Андрей Кимович", "1959/1/19", "Female")
+                Person("Лазарев Андрей Кимович", "1959/1/19", "Male")
         )
         dbHandler.close()
     }
