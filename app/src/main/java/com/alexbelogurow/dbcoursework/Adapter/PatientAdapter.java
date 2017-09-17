@@ -71,7 +71,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
 
     @Override
     public void onBindViewHolder(PatientViewHolder holder, int position) {
-        DBHandler dbhandler = new DBHandler(context);
+        DBHandler dbhandler = DBHandler.getInstance(context);
         final Patient patient = patientList.get(position);
         Person person = dbhandler.getPerson(patient.getPersonID());
 
@@ -87,6 +87,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
             public void onClick(View view) {
                 Intent patientInfoActivity = new Intent(context, ActivityPatientInfo.class);
                 patientInfoActivity.putExtra(EXTRA_PATIENT_ID, patient.getPatientID());
+                patientInfoActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(patientInfoActivity);
             }
         });

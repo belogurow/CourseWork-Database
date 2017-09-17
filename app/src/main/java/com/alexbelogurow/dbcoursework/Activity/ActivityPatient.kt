@@ -46,13 +46,13 @@ class ActivityPatient : AppCompatActivity() {
             supportActionBar!!.title = resources.getString(R.string.patients)
         }
 
-        dbHandler = DBHandler(applicationContext)
+        dbHandler = DBHandler.getInstance(this)
 
-        mRecyclerView?.layoutManager = LinearLayoutManager(applicationContext)
+        mRecyclerView?.layoutManager = LinearLayoutManager(this)
         mRecyclerView?.setHasFixedSize(true)
 
         mFabAddPatient?.setOnClickListener {
-            val addPatientActivity = Intent(applicationContext, ActivityAddPatient::class.java)
+            val addPatientActivity = Intent(this, ActivityAddPatient::class.java)
             startActivity(addPatientActivity)
         }
 

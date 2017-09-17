@@ -50,7 +50,7 @@ class ActivityAddDoctorForPatient : AppCompatActivity() {
         setSupportActionBar(mToolbar)
         supportActionBar?.title = getString(R.string.add_doctor_for_patient)
 
-        dbHandler = DBHandler(this)
+        dbHandler = DBHandler.getInstance(this)
 
         mRecyclerView?.layoutManager = LinearLayoutManager(this)
         mRecyclerView?.setHasFixedSize(true)

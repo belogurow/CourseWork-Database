@@ -65,7 +65,7 @@ class ActivityAddDoctor : AppCompatActivity() {
                     editTextDoctorSpecialization.text.toString(),
                     textViewDoctorPractiseDate.text.toString())
 
-            val dbHandler = DBHandler(this)
+            val dbHandler = DBHandler.getInstance(this)
             dbHandler.addDoctor(doctor, person)
             dbHandler.close()
 

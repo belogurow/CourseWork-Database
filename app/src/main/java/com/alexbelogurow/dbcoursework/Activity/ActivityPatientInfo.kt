@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import com.alexbelogurow.dbcoursework.Adapter.DiagnosesAdapter
 import com.alexbelogurow.dbcoursework.DataBase.DBHandler
@@ -41,7 +42,7 @@ class ActivityPatientInfo : AppCompatActivity() {
 
         patientId = intent.getIntExtra(EXTRA_PATIENT_ID, -1);
 
-        dbHandler = DBHandler(this)
+        dbHandler = DBHandler.getInstance(this)
 
         val patient = dbHandler?.getPatient(patientId!!)
         val personPatient = dbHandler?.getPerson(patient?.personID!!)
@@ -84,9 +85,20 @@ class ActivityPatientInfo : AppCompatActivity() {
         return "Возраст - ${ageInt.toString()}"
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_activity_patient_info, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+            R.id.action_menu_patient_delete     -> {
+                dbHandler?.deletePatient(patientId!!)
+                // TODO ADD ALERT DIALOG
                 onBackPressed()
                 return true
             }

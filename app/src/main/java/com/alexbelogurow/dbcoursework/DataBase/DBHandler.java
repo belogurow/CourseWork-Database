@@ -3,6 +3,7 @@ package com.alexbelogurow.dbcoursework.DataBase;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -21,8 +22,10 @@ import java.util.List;
 
 public class DBHandler extends SQLiteOpenHelper {
 
+    private static DBHandler sInstance;
+
     // DB version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // DB name
     private static final String DATABASE_NAME = "Hospital";
@@ -61,7 +64,14 @@ public class DBHandler extends SQLiteOpenHelper {
             KEY_DIAGNOSIS_NAME = "name",
             KEY_IS_CONFIRMED = "isConfirmed";
 
-    public DBHandler(Context context) {
+    public static synchronized DBHandler getInstance(Context context) {
+        if (sInstance == null) {
+            sInstance = new DBHandler(context.getApplicationContext());
+        }
+        return sInstance;
+    }
+
+    private DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -83,7 +93,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 KEY_JOB + " TEXT, " +
                 KEY_COMMENTS + " TEXT, " +
                 "FOREIGN KEY (" + KEY_PERSON_ID + ") REFERENCES " +
-                TABLE_PERSON + "(" + KEY_PERSON_ID + ")," +
+                TABLE_PERSON + "(" + KEY_PERSON_ID + ") ON DELETE CASCADE, " +
                 "FOREIGN KEY (" + KEY_DOCTOR_ID + ") REFERENCES " +
                 TABLE_DOCTOR + "(" + KEY_DOCTOR_ID + "))";
 
@@ -125,7 +135,6 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DIAGNOSIS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PATIENT_WITH_DIAGNOSIS);
 
-
         onCreate(db);
     }
 
@@ -151,6 +160,7 @@ public class DBHandler extends SQLiteOpenHelper {
         if (cursor != null) {
             cursor.moveToFirst();
         }
+
 
         Person person = new Person(Integer.parseInt(cursor.getString(0)),
                 cursor.getString(1),
@@ -312,6 +322,18 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return patientList;
+    }
+
+    public void deletePatient(int patientId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int personId = getPatient(patientId).getPersonID();
+
+        this.getWritableDatabase()
+                .delete(TABLE_PATIENT, KEY_PATIENT_ID + " =?", new String[]{Integer.toString(patientId)});
+        this.getWritableDatabase()
+                .delete(TABLE_PERSON, KEY_PERSON_ID + " =?", new String[] {Integer.toString(personId)});
+        db.close();
     }
 
     // =======================================================================

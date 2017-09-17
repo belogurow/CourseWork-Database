@@ -71,7 +71,7 @@ class ActivityAddPatient : AppCompatActivity() {
                     mEditTextPatientJob?.text.toString(),
                     mEditTextPatientComments?.text.toString())
 
-            val dbHandler = DBHandler(applicationContext)
+            val dbHandler = DBHandler.getInstance(this)
             val patientID = dbHandler.addPatient(patient, person)
             dbHandler.close();
 

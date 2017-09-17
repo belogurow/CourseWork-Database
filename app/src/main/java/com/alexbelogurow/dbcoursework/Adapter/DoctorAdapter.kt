@@ -61,7 +61,7 @@ class DoctorAdapter(private var doctorList: List<Doctor>,
 
 
     override fun onBindViewHolder(holder: DoctorViewHolder, position: Int) {
-        val dbHandler = DBHandler(context)
+        val dbHandler = DBHandler.getInstance(context)
         val doctor = doctorList[position]
         val person = dbHandler.getPerson(doctor.personID)
 

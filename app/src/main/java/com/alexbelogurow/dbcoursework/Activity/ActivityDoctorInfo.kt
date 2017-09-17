@@ -33,7 +33,7 @@ class ActivityDoctorInfo : AppCompatActivity() {
 
         doctorId = intent.getIntExtra(EXTRA_DOCTOR_ID, -1)
 
-        dbHandler = DBHandler(this)
+        dbHandler = DBHandler.getInstance(this)
 
         val doctor = dbHandler?.getDoctor(doctorId!!)
         val personDoctor = dbHandler?.getPerson(doctor?.personID!!)

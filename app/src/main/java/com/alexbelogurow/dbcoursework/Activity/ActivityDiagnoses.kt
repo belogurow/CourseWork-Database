@@ -47,7 +47,7 @@ class ActivityDiagnoses : AppCompatActivity() {
         val drawer = NavigationDrawer(this, mToolbar, 2)
         drawer.setNavigationDrawer()
 
-        dbHandler = DBHandler(this)
+        dbHandler = DBHandler.getInstance(this)
 
         mRecyclerView?.layoutManager = LinearLayoutManager(this)
         mRecyclerView?.setHasFixedSize(true)

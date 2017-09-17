@@ -60,7 +60,7 @@ class ActivityAddDiagnosesForPatient : AppCompatActivity() {
 
         mFabAddDiagnosis?.hide()
 
-        dbHandler = DBHandler(this)
+        dbHandler = DBHandler.getInstance(this)
 
         mRecyclerView?.layoutManager = LinearLayoutManager(this)
         mRecyclerView?.setHasFixedSize(true)

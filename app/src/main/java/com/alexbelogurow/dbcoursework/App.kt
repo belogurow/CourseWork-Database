@@ -30,7 +30,7 @@ class App: Application() {
     }
 
     private fun addDoctors() {
-        val dbHandler = DBHandler(this)
+        val dbHandler = DBHandler.getInstance(this)
 
         dbHandler.addDoctor(
                 Doctor("Акушерка","2013/4/27"),
@@ -56,7 +56,7 @@ class App: Application() {
     }
 
     private fun addDiagnoses() {
-        val dbHandler = DBHandler(this)
+        val dbHandler = DBHandler.getInstance(this)
 
         dbHandler.addDiagnosis(Diagnosis(
                 "C16.0",
@@ -117,5 +117,6 @@ class App: Application() {
                 "Специальное скрининговое обследование с целью выявления сахарного диабета"
         ))
 
+        dbHandler.close()
     }
 }
