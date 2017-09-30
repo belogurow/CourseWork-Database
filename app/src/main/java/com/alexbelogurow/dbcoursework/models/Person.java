@@ -1,6 +1,4 @@
-package com.alexbelogurow.dbcoursework.Model;
-
-import android.graphics.drawable.Drawable;
+package com.alexbelogurow.dbcoursework.models;
 
 import com.alexbelogurow.dbcoursework.R;
 

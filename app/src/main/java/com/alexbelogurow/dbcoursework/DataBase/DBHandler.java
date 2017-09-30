@@ -3,15 +3,16 @@ package com.alexbelogurow.dbcoursework.DataBase;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.alexbelogurow.dbcoursework.Model.Diagnosis;
-import com.alexbelogurow.dbcoursework.Model.Doctor;
-import com.alexbelogurow.dbcoursework.Model.Patient;
-import com.alexbelogurow.dbcoursework.Model.Person;
+import com.alexbelogurow.dbcoursework.models.Diagnosis;
+import com.alexbelogurow.dbcoursework.models.Doctor;
+import com.alexbelogurow.dbcoursework.models.Patient;
+import com.alexbelogurow.dbcoursework.models.Person;
+import com.alexbelogurow.dbcoursework.models.Treatment;
+import com.alexbelogurow.dbcoursework.models.TreatmentType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,14 +35,19 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String TABLE_PERSON = "Person",
             TABLE_PATIENT = "Patient",
             TABLE_TREATMENT = "Treatment",
+            TABLE_SIDE_EFFECT = "SideEffect",
             TABLE_DIAGNOSIS = "Diagnosis",
             TABLE_DOCTOR = "Doctor",
-            TABLE_PATIENT_WITH_DIAGNOSIS = "PatientWithDiagnosis";
+            TABLE_PATIENT_WITH_DIAGNOSIS = "PatientWithDiagnosis",
+            TABLE_DIAGNOSIS_WITH_TREATMENTS = "DiagnosisWithTreatments";
 
     // Common column names
     private static final String KEY_PERSON_ID = "personID",
             KEY_PATIENT_ID = "patientID",
-            KEY_DOCTOR_ID = "doctorID";
+            KEY_DOCTOR_ID = "doctorID",
+            KEY_ICD = "ICD",
+            KEY_TREATMENT_ID = "treatmentID",
+            KEY_COMMENTS = "comments";
 
     // TABLE_PERSON - column names
     private static final String KEY_FULL_NAME = "fullName",
@@ -52,17 +58,24 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String KEY_BLOOD_TYPE = "bloodType",
             KEY_RH_FACTOR = "rhFactor",
             KEY_LOCATION = "location",
-            KEY_JOB = "job",
-            KEY_COMMENTS = "comments";
+            KEY_JOB = "job";
 
     // TABLE_DOCTOR
     private static final String KEY_SPECIALIZATION = "specialization",
             KEY_PRACTICE_BEGAN_DATE = "practiceBeganDate";
 
     // TABLE_DIAGNOSIS
-    private static final String KEY_ICD = "ICD",
-            KEY_DIAGNOSIS_NAME = "name",
+    private static final String KEY_DIAGNOSIS_NAME = "diagnosisName",
             KEY_IS_CONFIRMED = "isConfirmed";
+
+    // TABLE TREATMENT
+    private static final String KEY_TREATMENT_NAME = "treatmentName",
+            KEY_TREATMENT_TYPE = "treatmentType";
+
+    // TABLE SIDE EFFECT
+    private static final String KEY_SIDE_EFFECT_ID = "sideEffectId",
+            KEY_SIDE_EFFECT_NAME = "sideEffectName";
+
 
     public static synchronized DBHandler getInstance(Context context) {
         if (sInstance == null) {
@@ -110,7 +123,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 KEY_DIAGNOSIS_NAME + " TEXT, " +
                 KEY_IS_CONFIRMED + " INTEGER " + ")";
 
-        final String createTablePatientWithTags = "CREATE TABLE " + TABLE_PATIENT_WITH_DIAGNOSIS + "(" +
+        final String createTablePatientWithDiagnosis = "CREATE TABLE " + TABLE_PATIENT_WITH_DIAGNOSIS + "(" +
                 KEY_PATIENT_ID + " INTEGER, " +
                 KEY_ICD + " TEXT, " +
                 "FOREIGN KEY (" + KEY_PATIENT_ID + ") REFERENCES " +
@@ -118,13 +131,37 @@ public class DBHandler extends SQLiteOpenHelper {
                 "FOREIGN KEY (" + KEY_ICD + ") REFERENCES " +
                 TABLE_DIAGNOSIS + "(" + KEY_ICD + "))";
 
+        final String createTableTreatment = "CREATE TABLE " + TABLE_TREATMENT + "(" +
+                KEY_TREATMENT_ID + " INTEGER PRIMARY KEY, " +
+                KEY_TREATMENT_NAME + " TEXT, " +
+                KEY_TREATMENT_TYPE + " TEXT " + ")";
+
+        final String createTableSideEffect = "CREATE TABLE " + TABLE_SIDE_EFFECT + "(" +
+                KEY_SIDE_EFFECT_ID + " INTEGER PRIMARY KEY, " +
+                KEY_TREATMENT_ID + " INTEGER, " +
+                KEY_SIDE_EFFECT_NAME + " TEXT, " +
+                KEY_COMMENTS + " TEXT, " +
+                "FOREIGN KEY (" + KEY_TREATMENT_ID  + ") REFERENCES " +
+                TABLE_TREATMENT + "(" + KEY_TREATMENT_ID + "))";
+
+        final String createTableDiagnosisWithTreatments = "CREATE TABLE " + TABLE_DIAGNOSIS_WITH_TREATMENTS + "(" +
+                KEY_ICD + " TEXT, " +
+                KEY_TREATMENT_ID + " INTEGER, " +
+                "FOREIGN KEY (" + KEY_ICD + ") REFERENCES " +
+                TABLE_DIAGNOSIS + "(" + KEY_ICD + ") " +
+                "FOREIGN KEY (" + KEY_TREATMENT_ID + ") REFERENCES " +
+                TABLE_TREATMENT + "(" + KEY_TREATMENT_ID + "))";
+
 
         // add createTablePatient and other
         db.execSQL(createTablePerson);
         db.execSQL(createTablePatient);
         db.execSQL(createTableDoctor);
         db.execSQL(createTableDiagnosis);
-        db.execSQL(createTablePatientWithTags);
+        db.execSQL(createTablePatientWithDiagnosis);
+        db.execSQL(createTableTreatment);
+        db.execSQL(createTableDiagnosisWithTreatments);
+        db.execSQL(createTableSideEffect);
     }
 
     @Override
@@ -134,6 +171,9 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DOCTOR);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DIAGNOSIS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PATIENT_WITH_DIAGNOSIS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TREATMENT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DIAGNOSIS_WITH_TREATMENTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SIDE_EFFECT);
 
         onCreate(db);
     }
@@ -209,7 +249,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 new String[] {String.valueOf(patient.getPatientID())});
         db.close();
 
-        Log.d("Add doctor for patient", doctor.toString());
+        Log.d("Add doctor for patient", patient.toString());
     }
 
     public Patient getPatient(int id) {
@@ -224,14 +264,14 @@ public class DBHandler extends SQLiteOpenHelper {
         }
 
         Patient patient = new Patient(
-                Integer.parseInt(cursor.getString(0)),  // KEY_PATIENT_ID
-                Integer.parseInt(cursor.getString(1)),  // KEY_PERSON_ID
-                Integer.parseInt(cursor.getString(2)),  // KEY_DOCTOR_ID
-                cursor.getString(3),                    // KEY_BLOOD_TYPE
-                cursor.getString(4),                    // KEY_RH_FACTOR
-                cursor.getString(5),                    // KEY_LOCATION
-                cursor.getString(6),                    // KEY_JOB
-                cursor.getString(7));                   // KEY_COMMENTS
+                cursor.getInt(0),       // KEY_PATIENT_ID
+                cursor.getInt(1),       // KEY_PERSON_ID
+                cursor.getInt(2),       // KEY_DOCTOR_ID
+                cursor.getString(3),    // KEY_BLOOD_TYPE
+                cursor.getString(4),    // KEY_RH_FACTOR
+                cursor.getString(5),    // KEY_LOCATION
+                cursor.getString(6),    // KEY_JOB
+                cursor.getString(7));   // KEY_COMMENTS
 
         cursor.close();
         db.close();
@@ -250,14 +290,14 @@ public class DBHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Patient patient = new Patient(
-                        Integer.parseInt(cursor.getString(0)),  // KEY_PATIENT_ID
-                        Integer.parseInt(cursor.getString(1)),  // KEY_PERSON_ID
-                        Integer.parseInt(cursor.getString(2)),  // KEY_DOCTOR_ID
-                        cursor.getString(3),                    // KEY_BLOOD_TYPE
-                        cursor.getString(4),                    // KEY_RH_FACTOR
-                        cursor.getString(5),                    // KEY_LOCATION
-                        cursor.getString(6),                    // KEY_JOB
-                        cursor.getString(7));                   // KEY_COMMENTS
+                        cursor.getInt(0),       // KEY_PATIENT_ID
+                        cursor.getInt(1),       // KEY_PERSON_ID
+                        cursor.getInt(2),       // KEY_DOCTOR_ID
+                        cursor.getString(3),    // KEY_BLOOD_TYPE
+                        cursor.getString(4),    // KEY_RH_FACTOR
+                        cursor.getString(5),    // KEY_LOCATION
+                        cursor.getString(6),    // KEY_JOB
+                        cursor.getString(7));   // KEY_COMMENTS
                 patientList.add(patient);
 
             } while (cursor.moveToNext());
@@ -278,14 +318,14 @@ public class DBHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Patient patient = new Patient(
-                        Integer.parseInt(cursor.getString(0)),  // KEY_PATIENT_ID
-                        Integer.parseInt(cursor.getString(1)),  // KEY_PERSON_ID
-                        Integer.parseInt(cursor.getString(2)),  // KEY_DOCTOR_ID
-                        cursor.getString(3),                    // KEY_BLOOD_TYPE
-                        cursor.getString(4),                    // KEY_RH_FACTOR
-                        cursor.getString(5),                    // KEY_LOCATION
-                        cursor.getString(6),                    // KEY_JOB
-                        cursor.getString(7));                   // KEY_COMMENTS
+                        cursor.getInt(0),       // KEY_PATIENT_ID
+                        cursor.getInt(1),       // KEY_PERSON_ID
+                        cursor.getInt(2),       // KEY_DOCTOR_ID
+                        cursor.getString(3),    // KEY_BLOOD_TYPE
+                        cursor.getString(4),    // KEY_RH_FACTOR
+                        cursor.getString(5),    // KEY_LOCATION
+                        cursor.getString(6),    // KEY_JOB
+                        cursor.getString(7));   // KEY_COMMENTS
                 patientList.add(patient);
 
             } while (cursor.moveToNext());
@@ -516,7 +556,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                //Log.d("Patient diag", cursor.toString());
                 Diagnosis diagnosis = getDiagnosis(cursor.getString(1));
                 diagnosisList.add(diagnosis);
             } while (cursor.moveToNext());
@@ -527,4 +566,106 @@ public class DBHandler extends SQLiteOpenHelper {
 
         return diagnosisList;
     }
+
+    // =======================================================================
+    // Work with TABLE_TREATMENT
+    // =======================================================================
+
+    public void addTreatment(Treatment treatment) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_TREATMENT_ID, treatment.getTreatmentId());
+        values.put(KEY_TREATMENT_NAME, treatment.getName());
+        values.put(KEY_TREATMENT_TYPE, treatment.getTreatmentType());
+
+        db.insertWithOnConflict(TABLE_TREATMENT, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+        db.close();
+
+        Log.d("Add treatment", treatment.toString());
+    }
+
+    public Treatment getTreatment(Integer treatmentId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Treatment treatment = null;
+
+        Cursor cursor = db.query(TABLE_TREATMENT, new String[]{
+                KEY_TREATMENT_ID, KEY_SIDE_EFFECT_NAME, KEY_TREATMENT_TYPE}, KEY_TREATMENT_ID + "=?",
+                new String[]{ String.valueOf(treatmentId) }, null, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+
+            treatment = new Treatment(
+                    cursor.getInt(0),       // KEY_TREATMENT_ID
+                    cursor.getString(1),    // KEY_TREATMENT_NAME
+                    cursor.getString(2));    // KET_TREATMENT_TYPE
+        }
+
+        cursor.close();
+        db.close();
+        return  treatment;
+    }
+
+    public List<Treatment> getAllTreatments() {
+        List<Treatment> treatmentList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_TREATMENT;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Treatment treatment = new Treatment(
+                        cursor.getInt(0),       // KEY_TREATMENT_ID
+                        cursor.getString(1),    // KEY_TREATMENT_NAME
+                        cursor.getString(2));    // KET_TREATMENT_TYPE
+                treatmentList.add(treatment);
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return  treatmentList;
+    }
+
+    // =======================================================================
+    // Work with TABLE_DIAGNOSIS_WITH_TREATMENTS
+    // =======================================================================
+
+    public void addTreatmentForDiagnosis(Treatment treatment, String ICD) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_ICD, ICD);
+        values.put(KEY_TREATMENT_ID, treatment.getTreatmentId());
+
+        db.insertWithOnConflict(TABLE_DIAGNOSIS_WITH_TREATMENTS, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+        db.close();
+
+        Log.d("Add treatment for diag", treatment.getTreatmentId() + " " + ICD);
+    }
+
+    public List<Treatment> getTreatmentsByDiagnosis(Diagnosis diagnosis) {
+        List<Treatment> treatmentList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_DIAGNOSIS_WITH_TREATMENTS, new String[] {
+                KEY_ICD, KEY_TREATMENT_ID}, KEY_ICD + "=?",
+                new String[] { String.valueOf(diagnosis.getICD()) }, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Treatment treatment = getTreatment(cursor.getInt(1));
+                treatmentList.add(treatment);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return treatmentList;
+    }
+
 }

@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar
 import com.alexbelogurow.dbcoursework.Adapter.DiagnosesAdapter
 import com.alexbelogurow.dbcoursework.DataBase.DBHandler
 import com.alexbelogurow.dbcoursework.Drawer.NavigationDrawer
-import com.alexbelogurow.dbcoursework.Model.Diagnosis
+import com.alexbelogurow.dbcoursework.models.Diagnosis
 import com.alexbelogurow.dbcoursework.R
 
 class ActivityDiagnoses : AppCompatActivity() {

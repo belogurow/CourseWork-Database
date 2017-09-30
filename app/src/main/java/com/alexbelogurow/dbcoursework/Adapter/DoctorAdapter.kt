@@ -10,10 +10,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import com.alexbelogurow.dbcoursework.Activity.ActivityAddDiagnosesForPatient
-import com.alexbelogurow.dbcoursework.Activity.ActivityDiagnoses
 import com.alexbelogurow.dbcoursework.Activity.ActivityDoctorInfo
 import com.alexbelogurow.dbcoursework.DataBase.DBHandler
-import com.alexbelogurow.dbcoursework.Model.Doctor
+import com.alexbelogurow.dbcoursework.models.Doctor
 import com.alexbelogurow.dbcoursework.R
 import java.util.*
 

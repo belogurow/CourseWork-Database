@@ -13,14 +13,11 @@ import com.alexbelogurow.dbcoursework.Adapter.DoctorAdapter
 import com.alexbelogurow.dbcoursework.DataBase.DBHandler
 
 import com.alexbelogurow.dbcoursework.Drawer.NavigationDrawer
-import com.alexbelogurow.dbcoursework.Model.Doctor
+import com.alexbelogurow.dbcoursework.models.Doctor
 import com.alexbelogurow.dbcoursework.R
 import android.app.SearchManager
 import android.content.Context
 import android.widget.SearchView
-import android.support.v4.widget.SearchViewCompat.setOnQueryTextListener
-
-
 
 
 class ActivityDoctor : AppCompatActivity() {

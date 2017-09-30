@@ -16,7 +16,7 @@ import android.widget.SearchView
 import com.alexbelogurow.dbcoursework.Adapter.PatientAdapter
 import com.alexbelogurow.dbcoursework.DataBase.DBHandler
 import com.alexbelogurow.dbcoursework.Drawer.NavigationDrawer
-import com.alexbelogurow.dbcoursework.Model.Patient
+import com.alexbelogurow.dbcoursework.models.Patient
 import com.alexbelogurow.dbcoursework.R
 import com.facebook.stetho.Stetho
 

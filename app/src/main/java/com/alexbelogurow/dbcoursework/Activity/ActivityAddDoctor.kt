@@ -8,8 +8,8 @@ import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.View
 import com.alexbelogurow.dbcoursework.DataBase.DBHandler
-import com.alexbelogurow.dbcoursework.Model.Doctor
-import com.alexbelogurow.dbcoursework.Model.Person
+import com.alexbelogurow.dbcoursework.models.Doctor
+import com.alexbelogurow.dbcoursework.models.Person
 import kotlinx.android.synthetic.main.activity_add_doctor.*
 import kotlinx.android.synthetic.main.content_activity_add_doctor.*
 

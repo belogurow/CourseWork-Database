@@ -6,12 +6,10 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.MenuItem
-import android.widget.Toast
 import com.alexbelogurow.dbcoursework.Adapter.DoctorAdapter
 import com.alexbelogurow.dbcoursework.DataBase.DBHandler
-import com.alexbelogurow.dbcoursework.Model.Doctor
+import com.alexbelogurow.dbcoursework.models.Doctor
 import com.alexbelogurow.dbcoursework.R
 
 class ActivityAddDoctorForPatient : AppCompatActivity() {

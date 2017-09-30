@@ -1,4 +1,4 @@
-package com.alexbelogurow.dbcoursework.Model;
+package com.alexbelogurow.dbcoursework.models;
 
 /**
  * Created by alexbelogurow on 14.05.17.

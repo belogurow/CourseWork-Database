@@ -3,7 +3,6 @@ package com.alexbelogurow.dbcoursework.Adapter
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.support.v7.view.menu.MenuView
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -11,13 +10,9 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.TextView
-import android.widget.Toast
-import com.alexbelogurow.dbcoursework.Activity.ActivityAddDiagnosesForPatient
 import com.alexbelogurow.dbcoursework.Activity.ActivityDiagnosesInfo
-import com.alexbelogurow.dbcoursework.DataBase.DBHandler
-import com.alexbelogurow.dbcoursework.Model.Diagnosis
+import com.alexbelogurow.dbcoursework.models.Diagnosis
 import com.alexbelogurow.dbcoursework.R
 
 /**

@@ -10,14 +10,11 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.Menu
-import android.widget.Toast
 import com.alexbelogurow.dbcoursework.Adapter.DiagnosesAdapter
 import com.alexbelogurow.dbcoursework.DataBase.DBHandler
-import com.alexbelogurow.dbcoursework.Model.Diagnosis
+import com.alexbelogurow.dbcoursework.models.Diagnosis
 import com.alexbelogurow.dbcoursework.R
-import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 
 
 class ActivityAddDiagnosesForPatient : AppCompatActivity() {

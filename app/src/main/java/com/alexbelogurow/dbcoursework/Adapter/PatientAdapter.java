@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.alexbelogurow.dbcoursework.Activity.ActivityPatientInfo;
 import com.alexbelogurow.dbcoursework.DataBase.DBHandler;
-import com.alexbelogurow.dbcoursework.Model.Patient;
-import com.alexbelogurow.dbcoursework.Model.Person;
+import com.alexbelogurow.dbcoursework.models.Patient;
+import com.alexbelogurow.dbcoursework.models.Person;
 import com.alexbelogurow.dbcoursework.R;
 
 
