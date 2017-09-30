@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.alexbelogurow.dbcoursework.Activity.ActivityPatientInfo">
+    tools:context="com.alexbelogurow.dbcoursework.activity.patient.ActivityPatientInfo">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"

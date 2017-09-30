@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.alexbelogurow.dbcoursework.Activity.ActivityAddPatient"
+    tools:context="com.alexbelogurow.dbcoursework.activity.patient.ActivityAddPatient"
     tools:showIn="@layout/activity_add_patient">
 
 

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:id="@+id/coordinator_add_doctor"
-    tools:context="com.alexbelogurow.dbcoursework.Activity.ActivityAddDoctor">
+    tools:context="com.alexbelogurow.dbcoursework.activity.doctor.ActivityAddDoctor">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
