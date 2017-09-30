@@ -7,10 +7,16 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ExpandableListView
+import android.widget.LinearLayout
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.SimpleExpandableListAdapter
 import android.widget.TextView
 import com.alexbelogurow.dbcoursework.R
 import com.alexbelogurow.dbcoursework.adapter.diagnosis.DiagnosesAdapter
+import com.alexbelogurow.dbcoursework.model.SideEffect
 import com.alexbelogurow.dbcoursework.model.Treatment
+import com.alexbelogurow.dbcoursework.util.DBHandler
 import kotlinx.android.synthetic.main.item_treatment.view.*
 
 /**
@@ -45,17 +51,24 @@ class TreatmentAdapter(private var treatmentList: List<Treatment>,
         var mCardView: CardView? = null
         var mTextViewTreatmentName: TextView? = null
         var mTextViewTreatmentType: TextView? = null
+        var mExpandableListSideEffects: ExpandableListView? = null
+
+        var sideEffects: List<SideEffect>? = null
+
 
         init {
             mCardView = itemView.findViewById(R.id.card_item_treatment)
             mTextViewTreatmentName = itemView.findViewById(R.id.text_item_treatment_name)
             mTextViewTreatmentType = itemView.findViewById(R.id.text_item_treatment_type)
+            mExpandableListSideEffects = itemView.findViewById(R.id.expanded_item_treatment)
+
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TreatmentViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_treatment, parent, false)
-        return TreatmentViewHolder(view)
+        val holder = TreatmentViewHolder(view)
+        return holder
     }
 
     override fun onBindViewHolder(holder: TreatmentViewHolder?, position: Int) {
@@ -63,6 +76,55 @@ class TreatmentAdapter(private var treatmentList: List<Treatment>,
 
         holder?.mTextViewTreatmentName?.text = treatment.name
         holder?.mTextViewTreatmentType?.text = treatment.treatmentType
+
+        holder?.sideEffects = DBHandler.getInstance(context).getSideEffectByTreatment(treatment)
+
+
+        if (holder?.sideEffects?.size!! > 0) {
+
+            val groupData = ArrayList<Map<String, String>>()
+            val childData = ArrayList<List<Map<String, String>>>()
+
+            val map = HashMap<String, String>()
+            map.put("groupName", "Побочные эффекты")
+            groupData.add(map)
+
+            val children = ArrayList<Map<String, String>>()
+            holder.sideEffects?.forEach {
+                val curChildMap = HashMap<String, String>()
+                curChildMap.put("childName", "${it.name} - ${it.comments}" )
+                children.add(curChildMap)
+            }
+            childData.add(children)
+
+
+            val groupFrom = arrayOf("groupName")
+            val groupTo = intArrayOf(android.R.id.text1)
+
+            val childFrom: Array<String> = arrayOf("childName")
+            val childTo = intArrayOf(android.R.id.text1)
+
+            val adapter = SimpleExpandableListAdapter(
+                    context, groupData, android.R.layout.simple_expandable_list_item_1,
+                    groupFrom, groupTo,
+                    childData, android.R.layout.simple_list_item_1,
+                    childFrom, childTo)
+            holder.mExpandableListSideEffects?.setAdapter(adapter)
+            holder.mExpandableListSideEffects?.setOnGroupClickListener(ExpandableListView.OnGroupClickListener { parent, v, groupPosition, id ->
+                if (!parent.isGroupExpanded(groupPosition)) {
+                    holder.mExpandableListSideEffects?.layoutParams = LinearLayout.LayoutParams(
+                            LayoutParams.MATCH_PARENT,
+                            200 + 140 * (holder.sideEffects?.size!!))
+                } else {
+                    parent.layoutParams = LinearLayout.LayoutParams(
+                            LayoutParams.MATCH_PARENT,
+                            LayoutParams.WRAP_CONTENT)
+                }
+
+                false
+            })
+        }
+
     }
 
     override fun getItemCount(): Int {

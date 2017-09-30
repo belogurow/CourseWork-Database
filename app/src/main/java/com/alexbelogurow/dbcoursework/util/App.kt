@@ -17,6 +17,7 @@ class App: Application() {
             addDoctors()
             addDiagnoses()
             addTreatments()
+            addSideEffects()
 
             // mark first time has runned.
             val editor = prefs.edit()
@@ -131,6 +132,16 @@ class App: Application() {
             ))
 
             close()
+        }
+    }
+
+    private fun addSideEffects() {
+        DBHandler.getInstance(this).apply {
+            addSideEffect(SideEffect(
+                    3,
+                    "Препарат «Регидрон»",
+                    "Слабость, головокружение"
+            ))
         }
     }
 }

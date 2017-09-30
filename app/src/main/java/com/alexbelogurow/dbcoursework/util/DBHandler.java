@@ -11,6 +11,7 @@ import com.alexbelogurow.dbcoursework.model.Diagnosis;
 import com.alexbelogurow.dbcoursework.model.Doctor;
 import com.alexbelogurow.dbcoursework.model.Patient;
 import com.alexbelogurow.dbcoursework.model.Person;
+import com.alexbelogurow.dbcoursework.model.SideEffect;
 import com.alexbelogurow.dbcoursework.model.Treatment;
 
 import java.util.ArrayList;
@@ -589,7 +590,7 @@ public class DBHandler extends SQLiteOpenHelper {
         Treatment treatment = null;
 
         Cursor cursor = db.query(TABLE_TREATMENT, new String[]{
-                KEY_TREATMENT_ID, KEY_SIDE_EFFECT_NAME, KEY_TREATMENT_TYPE}, KEY_TREATMENT_ID + "=?",
+                KEY_TREATMENT_ID, KEY_TREATMENT_NAME, KEY_TREATMENT_TYPE}, KEY_TREATMENT_ID + "=?",
                 new String[]{ String.valueOf(treatmentId) }, null, null, null, null);
 
         if (cursor != null) {
@@ -666,5 +667,71 @@ public class DBHandler extends SQLiteOpenHelper {
 
         return treatmentList;
     }
+
+    // =======================================================================
+    // Work with TABLE_SIDE_EFFECT
+    // =======================================================================
+
+    public void addSideEffect(SideEffect sideEffect) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_SIDE_EFFECT_ID, sideEffect.getSideEffectId());
+        values.put(KEY_TREATMENT_ID, sideEffect.getTreatmentId());
+        values.put(KEY_SIDE_EFFECT_NAME, sideEffect.getName());
+        values.put(KEY_COMMENTS, sideEffect.getComments());
+
+        db.insertWithOnConflict(TABLE_SIDE_EFFECT, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+        db.close();
+
+        Log.d("Add side effect", sideEffect.toString());
+    }
+
+    public SideEffect getSideEffect(Integer sideEffectId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        SideEffect sideEffect = null;
+
+        Cursor cursor = db.query(TABLE_SIDE_EFFECT, new String[]{
+                KEY_SIDE_EFFECT_ID, KEY_TREATMENT_ID, KEY_SIDE_EFFECT_NAME, KEY_COMMENTS},
+                KEY_SIDE_EFFECT_ID + "=?", new String[] { String.valueOf(sideEffectId) },
+                null, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+
+            sideEffect = new SideEffect(
+                    cursor.getInt(0),       // KEY_SIDE_EFFECT_ID
+                    cursor.getInt(1),       // KEY_TREATMENT_ID
+                    cursor.getString(2),    // KEY_SIDE_EFFECT_NAME
+                    cursor.getString(3));   // KEY_COMMENTS
+        }
+
+        cursor.close();
+        db.close();
+        return sideEffect;
+    }
+
+    public List<SideEffect> getSideEffectByTreatment(Treatment treatment) {
+        List<SideEffect> sideEffects = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_SIDE_EFFECT, new String[] {
+                KEY_SIDE_EFFECT_ID, KEY_TREATMENT_ID, KEY_SIDE_EFFECT_NAME, KEY_COMMENTS},
+                KEY_TREATMENT_ID + "=?", new String[]{ String.valueOf(treatment.getTreatmentId()) },
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                SideEffect sideEffect = getSideEffect(cursor.getInt(0));
+                sideEffects.add(sideEffect);
+            } while (cursor.moveToNext());
+
+        }
+        cursor.close();
+        db.close();
+
+        return sideEffects;
+    }
+
 
 }

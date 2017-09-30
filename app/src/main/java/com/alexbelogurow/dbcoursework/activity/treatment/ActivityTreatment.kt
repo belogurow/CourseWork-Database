@@ -52,7 +52,7 @@ class ActivityTreatment : AppCompatActivity() {
         dbHandler = DBHandler.getInstance(this)
 
         mRecyclerView?.layoutManager = LinearLayoutManager(this)
-        mRecyclerView?.setHasFixedSize(true)
+        //mRecyclerView?.setHasFixedSize(true)
     }
 
     private fun initializeListeners() {

@@ -8,6 +8,13 @@ public class SideEffect {
     private Integer sideEffectId, treatmentId;
     private String name, comments;
 
+    public SideEffect(Integer treatmentId, String name, String comments) {
+        this.treatmentId = treatmentId;
+        this.name = name;
+        this.comments = comments;
+    }
+
+
     public SideEffect(Integer sideEffectId, Integer treatmentId, String name, String comments) {
         this.sideEffectId = sideEffectId;
         this.treatmentId = treatmentId;
