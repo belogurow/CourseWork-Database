@@ -75,7 +75,7 @@
 
         <include
             android:id="@+id/layout_patient_info_doctor"
-            layout="@layout/doctor_item"/>
+            layout="@layout/item_doctor"/>
 
         <TextView
             android:layout_marginTop="8dp"

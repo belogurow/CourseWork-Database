@@ -70,7 +70,6 @@ class ActivityDiagnoses : AppCompatActivity() {
 
     override fun onRestart() {
         super.onRestart()
-        //TODO replace !!
         mAdapter?.updateList(dbHandler?.allDiagnosis!!)
     }
 }

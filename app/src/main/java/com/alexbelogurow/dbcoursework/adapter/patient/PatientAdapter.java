@@ -65,7 +65,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
 
     @Override
     public PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.patient_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_patient, parent, false);
         return new PatientViewHolder(view);
     }
 

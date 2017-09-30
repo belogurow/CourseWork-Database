@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import com.alexbelogurow.dbcoursework.R
 import com.alexbelogurow.dbcoursework.adapter.diagnosis.DiagnosesAdapter
+import com.alexbelogurow.dbcoursework.adapter.treatment.TreatmentAdapter
 import com.alexbelogurow.dbcoursework.model.Diagnosis
 import com.alexbelogurow.dbcoursework.model.Treatment
 import com.alexbelogurow.dbcoursework.util.DBHandler
@@ -24,7 +25,7 @@ class ActivityTreatment : AppCompatActivity() {
     private var mRecyclerView: RecyclerView? = null
 
     private var dbHandler: DBHandler? = null
-    private var mAdapter: DiagnosesAdapter? = null
+    private var mAdapter: TreatmentAdapter? = null
 
     private var treatmentsList: List<Treatment>? = null
 
@@ -63,6 +64,13 @@ class ActivityTreatment : AppCompatActivity() {
     }
 
     private fun initializeAdapter() {
+        treatmentsList = dbHandler?.allTreatments
+        mAdapter = TreatmentAdapter(treatmentsList!!, this, INFO_ABOUT_TREATMENT, DIAGNOSIS_ICD)
+        mRecyclerView?.adapter = mAdapter
+    }
 
+    override fun onRestart() {
+        super.onRestart()
+        mAdapter?.updateList(dbHandler?.allTreatments!!)
     }
 }

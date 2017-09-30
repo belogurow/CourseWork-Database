@@ -12,7 +12,7 @@ import com.alexbelogurow.dbcoursework.R
 import com.alexbelogurow.dbcoursework.activity.doctor.ActivityDoctorInfo
 import kotlinx.android.synthetic.main.activity_patient_info.*
 import kotlinx.android.synthetic.main.content_activity_patient_info.*
-import kotlinx.android.synthetic.main.doctor_item.*
+import kotlinx.android.synthetic.main.item_doctor.*
 import java.util.*
 
 class ActivityPatientInfo : AppCompatActivity() {
