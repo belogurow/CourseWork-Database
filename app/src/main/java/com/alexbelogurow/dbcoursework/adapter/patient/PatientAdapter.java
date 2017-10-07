@@ -21,10 +21,12 @@ import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.iconics.IconicsDrawable;
 
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import kotlin.text.Regex;
 
 /**
  * Created by alexbelogurow on 07.05.17.
@@ -82,7 +84,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
 
         holder.mTextViewPatientInfoName.setText(person.getFullName());
         holder.mTextViewPatientInfoLocation.setText(patient.getLocation());
-        holder.mTextViewPatientInfoBirthDate.setText(person.getBirthDate());
+        holder.mTextViewPatientInfoBirthDate.setText(getAge(person.getBirthDate()));
         if (person.getSex().equals("Male")) {
             Drawable drawableMale = new IconicsDrawable(context)
                     .icon(FontAwesome.Icon.faw_male)
@@ -96,8 +98,6 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
                     .sizeDp(64);
             holder.mImageViewGender.setImageDrawable(drawableFemale);
         }
-//        holder.mCircleImageViewGender.setImageDrawable(
-//                ContextCompat.getDrawable(context, person.getGenderPhotoID()));
         dbhandler.close();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +110,40 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
             }
         });
     }
+
+    private String getAge(String birthDate) {
+        String date[] = birthDate.split("/");
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+
+        dob.set(Integer.parseInt(date[2]),
+                Integer.parseInt(date[1]),
+                Integer.parseInt(date[1]));
+
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
+            age--;
+        }
+
+        return "Возраст - " + age;
+    }
+
+//    private fun getAge(birthDate: String): String {
+//        val date = birthDate.split("/".toRegex())
+//        val dob = Calendar.getInstance()
+//        val today = Calendar.getInstance()
+//
+//        dob.set(date[2].toInt(), date[1].toInt(), date[1].toInt())
+//
+//        var age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR)
+//
+//        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
+//            age--
+//        }
+//
+//        val ageInt = age
+//        return "Возраст - ${ageInt.toString()}"
+//    }
 
     @Override
     public int getItemCount() {

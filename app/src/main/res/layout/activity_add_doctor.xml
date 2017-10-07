@@ -25,7 +25,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbarAddDoctor"
+                android:id="@+id/toolbar_add_doctor"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 app:layout_collapseMode="pin"
@@ -34,6 +34,6 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_activity_add_doctor"/>
+    <include layout="@layout/content_add_doctor"/>
 
 </android.support.design.widget.CoordinatorLayout>

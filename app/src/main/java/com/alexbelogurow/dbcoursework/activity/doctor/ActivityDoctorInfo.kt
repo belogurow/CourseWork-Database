@@ -52,7 +52,7 @@ class ActivityDoctorInfo : AppCompatActivity() {
         val dob = Calendar.getInstance()
         val today = Calendar.getInstance()
 
-        dob.set(date[0].toInt(), date[1].toInt(), date[2].toInt())
+        dob.set(date[2].toInt(), date[1].toInt(), date[0].toInt())
 
         var age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR)
 
