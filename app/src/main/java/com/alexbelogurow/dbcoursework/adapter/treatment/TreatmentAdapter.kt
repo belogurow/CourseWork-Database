@@ -23,8 +23,7 @@ import kotlinx.android.synthetic.main.item_treatment.view.*
  */
 class TreatmentAdapter(private var treatmentList: List<Treatment>,
                        private val context: Context,
-                       private var nextActivity: Int,
-                       private var diagnosisICD: String = "") :
+                       private var nextActivity: Int) :
         RecyclerView.Adapter<TreatmentAdapter.TreatmentViewHolder>() {
 
     // NEXT ACTIVITY

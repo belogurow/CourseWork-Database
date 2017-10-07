@@ -44,13 +44,14 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/diagnosis_name"/>
 
-            <Button
-                android:id="@+id/button_add_treatment_for_diagnosis"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:textAllCaps="false"
-                android:text="@string/title_activity_add_treatment_for_diagnoses"/>
         </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/button_add_treatment_for_diagnosis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:textAllCaps="false"
+            android:text="@string/title_activity_add_treatment_for_diagnoses"/>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

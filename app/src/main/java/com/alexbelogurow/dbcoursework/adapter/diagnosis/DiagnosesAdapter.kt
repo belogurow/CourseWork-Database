@@ -11,7 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.alexbelogurow.dbcoursework.activity.diagnosis.ActivityDiagnosesInfo
+import com.alexbelogurow.dbcoursework.activity.diagnosis.DiagnosesInfoActivity
 import com.alexbelogurow.dbcoursework.model.Diagnosis
 import com.alexbelogurow.dbcoursework.R
 
@@ -107,7 +107,7 @@ class DiagnosesAdapter(private var diagnosesList: List<Diagnosis>,
 
             when (nextActivity) {
                 INFO_ABOUT_DIAGNOSIS        ->  {
-                    val diagnosisInfoIntent = Intent(context, ActivityDiagnosesInfo::class.java)
+                    val diagnosisInfoIntent = Intent(context, DiagnosesInfoActivity::class.java)
                     diagnosisInfoIntent.putExtra(EXTRA_DIAGNOSIS_ICD, diagnosis.icd)
                     context.startActivity(diagnosisInfoIntent)
                 }

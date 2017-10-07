@@ -18,7 +18,6 @@ class ActivityTreatment : AppCompatActivity() {
 
     private val TAG = "TreatmentActvity"
     private val INFO_ABOUT_TREATMENT = 0
-    private val DIAGNOSIS_ICD = ""
 
     private var mToolbar: Toolbar? = null
     private var mFabAddTreatment: FloatingActionButton? = null
@@ -65,7 +64,7 @@ class ActivityTreatment : AppCompatActivity() {
 
     private fun initializeAdapter() {
         treatmentsList = dbHandler?.allTreatments
-        mAdapter = TreatmentAdapter(treatmentsList!!, this, INFO_ABOUT_TREATMENT, DIAGNOSIS_ICD)
+        mAdapter = TreatmentAdapter(treatmentsList!!, this, INFO_ABOUT_TREATMENT)
         mRecyclerView?.adapter = mAdapter
     }
 

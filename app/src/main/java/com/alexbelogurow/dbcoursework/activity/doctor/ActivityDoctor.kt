@@ -43,7 +43,6 @@ class ActivityDoctor : AppCompatActivity() {
         initializeViews()
         initializeListeners()
         initializeAdapter()
-        //dbHandler?.addDoctor(Doctor("dentist", "5/3/2012"), Person("Tom", "5/12/1972", "Male"))
     }
 
     private fun initializeViews() {

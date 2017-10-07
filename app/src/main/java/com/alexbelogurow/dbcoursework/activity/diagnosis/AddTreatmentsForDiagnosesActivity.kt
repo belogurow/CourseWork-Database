@@ -65,7 +65,7 @@ class AddTreatmentsForDiagnosesActivity : AppCompatActivity() {
 
     private fun initializeAdapter() {
         treatmentsList = dbHandler?.allTreatments
-        mAdapter = TreatmentAdapter(treatmentsList!!, this, ADD_TREATMENTS_FOR_DIAGNOSIS, icd!!)
+        mAdapter = TreatmentAdapter(treatmentsList!!, this, ADD_TREATMENTS_FOR_DIAGNOSIS)
         mRecyclerView?.adapter = mAdapter
     }
 

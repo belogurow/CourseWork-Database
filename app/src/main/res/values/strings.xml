@@ -41,7 +41,7 @@
     <string name="diagnosis_was_added">Диагноз был добавлен</string>
 
     <!-- DiagnosesInfoActivity -->
-    <string name="title_activity_diagnoses_info">ActivityDiagnosesInfo</string>
+    <string name="title_activity_diagnoses_info">Диагноз</string>
 
     <!-- ActivityAddDoctor -->
     <string name="title_activity_add_doctor">Добавить врача</string>
