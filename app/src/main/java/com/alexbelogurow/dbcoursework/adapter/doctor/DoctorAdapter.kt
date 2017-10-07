@@ -66,7 +66,7 @@ class DoctorAdapter(private var doctorList: List<Doctor>,
 
         holder.mTextViewDoctorName?.text = person.fullName
         holder.mTextViewDoctorSpecialization?.text = doctor.specialization
-        holder.mTextViewDoctorAge?.text = getAge(person.birthDate)
+        // TODO holder.mTextViewDoctorAge?.text = getAge(person.birthDate)
 
         holder.mCardView?.setOnClickListener {
 
@@ -97,22 +97,23 @@ class DoctorAdapter(private var doctorList: List<Doctor>,
         return doctorList.count()
     }
 
-    private fun getAge(birthDate: String): String {
-        val date = birthDate.split("/".toRegex())
-        val dob = Calendar.getInstance()
-        val today = Calendar.getInstance()
-
-        dob.set(date[0].toInt(), date[1].toInt(), date[2].toInt())
-
-        var age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR)
-
-        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
-            age--
-        }
-
-        val ageInt = age
-        return "Возраст - ${ageInt.toString()}"
-    }
+    // TODO change alg
+//    private fun getAge(birthDate: String): String {
+//        val date = birthDate.split("/".toRegex())
+//        val dob = Calendar.getInstance()
+//        val today = Calendar.getInstance()
+//
+//        dob.set(date[0].toInt(), date[1].toInt(), date[2].toInt())
+//
+//        var age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR)
+//
+//        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
+//            age--
+//        }
+//
+//        val ageInt = age
+//        return "Возраст - ${ageInt.toString()}"
+//    }
 }
 //--------------------------------------------
 

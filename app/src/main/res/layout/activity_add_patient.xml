@@ -8,7 +8,7 @@
     tools:context="com.alexbelogurow.dbcoursework.activity.patient.ActivityAddPatient"
     android:id="@+id/coordLayoutAddPatient">
 
-    <include layout="@layout/content_activity_add_patient" />
+    <include layout="@layout/content_add_patient" />
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -24,7 +24,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbarAddPatient"
+                android:id="@+id/toolbar_add_patient"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 app:layout_collapseMode="pin"

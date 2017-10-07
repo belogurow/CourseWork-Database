@@ -52,14 +52,6 @@ public class Person {
         return sex;
     }
 
-    public int getGenderPhotoID() {
-        if (sex.equals("Male")) {
-            return R.drawable.ic_patient_male_on;
-        } else {
-            return R.drawable.ic_patient_female_on;
-        }
-    }
-
     public void setSex(String sex) {
         this.sex = sex;
     }

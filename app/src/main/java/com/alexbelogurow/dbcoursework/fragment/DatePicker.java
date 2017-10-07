@@ -3,6 +3,7 @@ package com.alexbelogurow.dbcoursework.fragment;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.app.DatePickerDialog;
 import android.widget.TextView;
@@ -28,7 +29,7 @@ public class DatePicker extends DialogFragment
         Dialog picker = new DatePickerDialog(getActivity(), this,
                 1990, Calendar.MONTH, Calendar.DAY_OF_MONTH);
 
-        picker.setTitle("Choose Birth Date");
+        picker.setTitle(getString(R.string.birth_date));
         return picker;
     }
 
@@ -45,9 +46,8 @@ public class DatePicker extends DialogFragment
 
     @Override
     public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
-        TextView textViewDate = (TextView) getActivity().findViewById(R.id.textViewPatientDate);
-        date = year + "/" + month + "/" + dayOfMonth;
-        textViewDate.setText(date);
+        TextInputLayout textInputDate =  getActivity().findViewById(R.id.text_input_patient_birth_date);
+        textInputDate.getEditText().setText(dayOfMonth + "/" + (month+1) + "/" + year);
     }
 
 

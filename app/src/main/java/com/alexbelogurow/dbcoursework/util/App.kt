@@ -1,8 +1,12 @@
 package com.alexbelogurow.dbcoursework.util
 
 import android.app.Application
+import android.content.Context
 import android.preference.PreferenceManager
 import com.alexbelogurow.dbcoursework.model.*
+import com.mikepenz.iconics.context.IconicsContextWrapper
+
+
 
 
 /**
@@ -148,5 +152,10 @@ class App: Application() {
 //                    "Слабость, головокружение"
 //            ))
         }
+    }
+
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(IconicsContextWrapper.wrap(base))
     }
 }

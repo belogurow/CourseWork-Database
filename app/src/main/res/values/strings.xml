@@ -3,6 +3,7 @@
     <string name="action_settings">Settings</string>
 
 
+    <string name="empty_field">Пустое поле</string>
     <string name="treatment">Лечение</string>
     <string name="patient">Пациент</string>
     <string name="patients">Пациенты</string>

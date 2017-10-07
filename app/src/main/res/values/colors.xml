@@ -4,6 +4,10 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="malePick">#518be7</color>
+    <color name="femalePick">#FF4081</color>
+    <color name="defualtPick">#bababa</color>
+
     <color name="colorBorderOff">#d0d0d0</color>
     <color name="colorBorderOn">#000000</color>
 </resources>
