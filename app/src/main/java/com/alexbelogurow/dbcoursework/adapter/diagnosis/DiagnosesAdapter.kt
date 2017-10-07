@@ -29,7 +29,7 @@ class DiagnosesAdapter(private var diagnosesList: List<Diagnosis>,
     private val ADD_DIAGNOSIS_TO_PATIENT = 1
 
     // EXTRA
-    private val EXTRA_ICD = "ICD"
+    private val EXTRA_DIAGNOSIS_ICD = "ICD"
 
     private var buttonDone: MenuItem? = null
     private var countOfSelection = 0
@@ -107,9 +107,8 @@ class DiagnosesAdapter(private var diagnosesList: List<Diagnosis>,
 
             when (nextActivity) {
                 INFO_ABOUT_DIAGNOSIS        ->  {
-                    // TODO ADD TRANSITION TO DIAGNOSES INFO
                     val diagnosisInfoIntent = Intent(context, ActivityDiagnosesInfo::class.java)
-                    diagnosisInfoIntent.putExtra(EXTRA_ICD, diagnosis.icd)
+                    diagnosisInfoIntent.putExtra(EXTRA_DIAGNOSIS_ICD, diagnosis.icd)
                     context.startActivity(diagnosisInfoIntent)
                 }
                 ADD_DIAGNOSIS_TO_PATIENT    ->  {

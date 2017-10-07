@@ -123,12 +123,12 @@ class App: Application() {
                     TreatmentType.Psychotherapeutic.type
             ))
             addTreatment(Treatment(
-                    "Уменьшение внутреннего брюшного давления в желудочно-кишечном тракте",
-                    TreatmentType.Psychotherapeutic.type
-            ))
-            addTreatment(Treatment(
                     "Регулирование работы кардии желудка",
                     TreatmentType.Medication.type
+            ))
+            addTreatment(Treatment(
+                    "Уменьшение внутреннего брюшного давления в желудочно-кишечном тракте",
+                    TreatmentType.Psychotherapeutic.type
             ))
 
             close()
@@ -138,10 +138,15 @@ class App: Application() {
     private fun addSideEffects() {
         DBHandler.getInstance(this).apply {
             addSideEffect(SideEffect(
-                    3,
+                    2,
                     "Препарат «Регидрон»",
                     "Слабость, головокружение"
             ))
+//            addSideEffect(SideEffect(
+//                    3,
+//                    "Препарат «Регидрон2»",
+//                    "Слабость, головокружение"
+//            ))
         }
     }
 }

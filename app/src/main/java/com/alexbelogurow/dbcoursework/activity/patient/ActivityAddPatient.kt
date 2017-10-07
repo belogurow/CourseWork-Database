@@ -113,12 +113,12 @@ class ActivityAddPatient : AppCompatActivity() {
 
     private fun initializeFields() {
         mBirthDate = findViewById<View>(R.id.textViewPatientDate) as TextView
-        mEditTextPatientName = findViewById<View>(R.id.editTextDoctorName) as EditText
+        mEditTextPatientName = findViewById<View>(R.id.editTextPatientName) as EditText
         mEditTextPatientLocation = findViewById<View>(R.id.editTextPatientLocation) as EditText
         mEditTextPatientJob = findViewById<View>(R.id.editTextPatientJob) as EditText
         mEditTextPatientComments = findViewById<View>(R.id.editTextPatientComments) as EditText
 
-        mButtonPickBirthDate = findViewById<View>(R.id.buttonDoctorPickDate) as Button
+        mButtonPickBirthDate = findViewById<View>(R.id.buttonPatientPickDate) as Button
         mButtonAddDoctorForPatient = findViewById(R.id.button_add_doctor_for_patient)
 
         mSpinnerBloodType = findViewById<View>(R.id.spinnerBloodType) as Spinner

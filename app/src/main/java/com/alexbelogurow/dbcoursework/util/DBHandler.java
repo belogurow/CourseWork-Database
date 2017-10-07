@@ -515,9 +515,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 KEY_ICD, KEY_DIAGNOSIS_NAME, KEY_IS_CONFIRMED}, KEY_ICD + "=?",
                 new String[] { ICD }, null, null, null, null);
 
-        if (cursor != null) {
-            cursor.moveToFirst();
-
+        if (cursor.moveToFirst()) {
             diagnosis = new Diagnosis(
                     cursor.getString(0),        // KEY_ICD
                     cursor.getString(1),        // KEY_DIAGNOSIS_NAME

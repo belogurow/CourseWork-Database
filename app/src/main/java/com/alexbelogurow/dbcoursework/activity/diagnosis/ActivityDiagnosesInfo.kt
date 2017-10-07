@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.activity_diagnoses_info.*
 
 class ActivityDiagnosesInfo : AppCompatActivity() {
 
-    private val EXTRA_ICD = "ICD"
+    private val EXTRA_DIAGNOSIS_ICD = "ICD"
 
     private var icd: String? = null
 
@@ -21,6 +21,6 @@ class ActivityDiagnosesInfo : AppCompatActivity() {
     }
 
     private fun initializeViews() {
-        icd = intent.getStringExtra(EXTRA_ICD)
+        icd = intent.getStringExtra(EXTRA_DIAGNOSIS_ICD)
     }
 }

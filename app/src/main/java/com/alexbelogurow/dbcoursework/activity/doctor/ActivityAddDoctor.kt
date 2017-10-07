@@ -58,7 +58,7 @@ class ActivityAddDoctor : AppCompatActivity() {
 
         buttonAddDoctor.setOnClickListener {
             val person = Person(
-                    editTextDoctorName.text.toString(),
+                    editTextPatientName.text.toString(),
                     textViewDoctorDate.text.toString(),
                     if (numberOfCurImage == 0) "Male" else "Female")
             val doctor = Doctor(

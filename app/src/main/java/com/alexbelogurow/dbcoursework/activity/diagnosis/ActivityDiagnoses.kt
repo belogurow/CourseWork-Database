@@ -1,5 +1,6 @@
 package com.alexbelogurow.dbcoursework.activity.diagnosis
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -54,10 +55,9 @@ class ActivityDiagnoses : AppCompatActivity() {
     }
 
     private fun initializeListeners() {
-        // TODO ADD LISTENER
         mFabAddDiagnosis?.setOnClickListener {
-            //val addDoctorActivity = Intent(this, ActivityAddDoctor::class.java)
-            //startActivity(addDoctorActivity)
+            val addDiagnosesActivity = Intent(this, AddDiagnosesActivity::class.java)
+            startActivity(addDiagnosesActivity)
         }
     }
 

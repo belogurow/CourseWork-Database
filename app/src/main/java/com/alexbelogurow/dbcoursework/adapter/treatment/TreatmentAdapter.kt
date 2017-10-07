@@ -1,17 +1,16 @@
 package com.alexbelogurow.dbcoursework.adapter.treatment
 
 import android.content.Context
+import android.graphics.Color
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ExpandableListView
-import android.widget.LinearLayout
+import android.widget.*
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.SimpleExpandableListAdapter
-import android.widget.TextView
 import com.alexbelogurow.dbcoursework.R
 import com.alexbelogurow.dbcoursework.adapter.diagnosis.DiagnosesAdapter
 import com.alexbelogurow.dbcoursework.model.SideEffect
@@ -30,15 +29,15 @@ class TreatmentAdapter(private var treatmentList: List<Treatment>,
 
     // NEXT ACTIVITY
     private val INFO_ABOUT_TREATMENT = 0
-    private val ADD_TREATMENTS_TO_DIAGNOSIS = 1
+    private val ADD_TREATMENTS_FOR_DIAGNOSIS = 1
 
     // EXTRA
-    private val EXTRA_ICD = "ICD"
+    private val EXTRA_DIAGNOSIS_ICD = "ICD"
 
     private var buttonDone: MenuItem? = null
     private var countOfSelection = 0
 
-    fun setButtonDone() {
+    fun setButtonDone(buttonDone: MenuItem?) {
         this.buttonDone = buttonDone
     }
 
@@ -79,9 +78,39 @@ class TreatmentAdapter(private var treatmentList: List<Treatment>,
 
         holder?.sideEffects = DBHandler.getInstance(context).getSideEffectByTreatment(treatment)
 
+        if (treatment.isSelected) {
+            holder?.itemView?.setBackgroundColor(Color.LTGRAY)
+            buttonDone?.isVisible = countOfSelection > 0
+        } else {
+            holder?.itemView?.setBackgroundColor(Color.WHITE)
+            buttonDone?.isVisible = countOfSelection > 0
+        }
+        Log.d("button done", "is visible + ${buttonDone?.isVisible}" )
+        Log.d("button done", (countOfSelection > 0).toString())
 
-        if (holder?.sideEffects?.size!! > 0) {
+        holder?.mCardView?.setOnClickListener {
+            when (nextActivity) {
+                INFO_ABOUT_TREATMENT            -> {
+                    //TODO TREATMENT_ACTIVITY_INFO
 
+                }
+                ADD_TREATMENTS_FOR_DIAGNOSIS    -> {
+                    treatment.isSelected = !treatment.isSelected
+
+                    if (treatment.isSelected) {
+                        countOfSelection++
+                    } else {
+                        countOfSelection--
+                    }
+
+                    Log.d("position", "$position + $countOfSelection + $buttonDone")
+                    notifyItemChanged(position)
+                }
+            }
+        }
+
+
+        if (nextActivity == INFO_ABOUT_TREATMENT && holder?.sideEffects?.size!! > 0) {
             val groupData = ArrayList<Map<String, String>>()
             val childData = ArrayList<List<Map<String, String>>>()
 

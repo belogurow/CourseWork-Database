@@ -74,7 +74,7 @@ class ActivityAddDiagnosesForPatient : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
-        inflater.inflate(R.menu.menu_activity_add_diagnoses, menu)
+        inflater.inflate(R.menu.menu_activity_add_diagnoses_for_patient, menu)
 
         val buttonDone = menu?.findItem(R.id.menu_action_add_diagnoses)
         mAdapter?.setButtonDone(buttonDone)
