@@ -1,5 +1,7 @@
 package com.alexbelogurow.dbcoursework.activity.diagnosis
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +9,8 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.view.Menu
+import android.widget.SearchView
 import com.alexbelogurow.dbcoursework.adapter.diagnosis.DiagnosesAdapter
 import com.alexbelogurow.dbcoursework.util.DBHandler
 import com.alexbelogurow.dbcoursework.util.NavigationDrawer
@@ -71,5 +75,30 @@ class ActivityDiagnoses : AppCompatActivity() {
     override fun onRestart() {
         super.onRestart()
         mAdapter?.updateList(dbHandler?.allDiagnosis!!)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_diagnoses, menu)
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = menu?.findItem(R.id.menu_action_diagnoses_search)?.actionView as SearchView
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+
+        searchView.setSearchableInfo(searchManager.
+                getSearchableInfo(componentName))
+        searchView.isSubmitButtonEnabled = true
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(text: String?): Boolean {
+                diagnosisList = dbHandler?.getDiagnosesBySearch(text)
+                mAdapter?.updateList(diagnosisList!!)
+                return true
+            }
+
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+        })
+        return super.onCreateOptionsMenu(menu)
     }
 }

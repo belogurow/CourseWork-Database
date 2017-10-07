@@ -528,6 +528,26 @@ public class DBHandler extends SQLiteOpenHelper {
         return diagnosis;
     }
 
+    public List<Diagnosis> getDiagnosesBySearch(String text) {
+        List<Diagnosis> diagnosisList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(true, TABLE_DIAGNOSIS, new String[] {
+                KEY_ICD, KEY_DIAGNOSIS_NAME, KEY_IS_CONFIRMED},
+                KEY_ICD + " like \'" + text + "%\'",
+                null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                diagnosisList.add(getDiagnosis(cursor.getString(0)));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return diagnosisList;
+    }
+
     // =======================================================================
     // Work with TABLE_PATIENT_WITH_DIAGNOSIS
     // =======================================================================

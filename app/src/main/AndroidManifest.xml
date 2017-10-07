@@ -52,6 +52,10 @@
         <activity
             android:name=".activity.diagnosis.ActivityDiagnoses"
             android:launchMode="singleTop">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable">
+            </meta-data>
         </activity>
         <activity
             android:name=".activity.doctor.ActivityDoctorInfo"

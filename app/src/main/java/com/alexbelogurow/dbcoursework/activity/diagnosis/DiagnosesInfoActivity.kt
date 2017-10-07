@@ -1,11 +1,15 @@
 package com.alexbelogurow.dbcoursework.activity.diagnosis
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.view.Menu
 import android.view.MenuItem
+import android.widget.SearchView
 import android.widget.TextView
 import com.alexbelogurow.dbcoursework.R
 import com.alexbelogurow.dbcoursework.adapter.treatment.TreatmentAdapter
