@@ -310,10 +310,11 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public List<Patient> getAllPatients() {
         List<Patient> patientList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_PATIENT;
 
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.query(TABLE_PATIENT, new String[] {
+                KEY_PATIENT_ID, KEY_PERSON_ID, KEY_DOCTOR_ID, KEY_BLOOD_TYPE, KEY_RH_FACTOR, KEY_LOCATION,
+                KEY_JOB, KEY_COMMENTS}, null, null, null, null, null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -369,8 +370,8 @@ public class DBHandler extends SQLiteOpenHelper {
 
         int personId = getPatient(patientId).getPersonID();
 
-        this.getWritableDatabase()
-                .delete(TABLE_PATIENT, KEY_PATIENT_ID + " =?", new String[]{Integer.toString(patientId)});
+        this.getWritableDatabase().delete(TABLE_PATIENT, KEY_PATIENT_ID +
+                " =?", new String[]{Integer.toString(patientId)});
         this.getWritableDatabase()
                 .delete(TABLE_PERSON, KEY_PERSON_ID + " =?", new String[] {Integer.toString(personId)});
         db.close();
