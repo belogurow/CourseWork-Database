@@ -4,10 +4,8 @@ import android.app.Application
 import android.content.Context
 import android.preference.PreferenceManager
 import com.alexbelogurow.dbcoursework.model.*
+import com.facebook.stetho.Stetho
 import com.mikepenz.iconics.context.IconicsContextWrapper
-
-
-
 
 /**
  * Created by alexbelogurow on 08.09.17.
@@ -15,6 +13,7 @@ import com.mikepenz.iconics.context.IconicsContextWrapper
 class App: Application() {
     override fun onCreate() {
         super.onCreate()
+        initializeStetho()
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         if (!prefs.getBoolean("firstTime", false)) {
@@ -23,11 +22,31 @@ class App: Application() {
             addTreatments()
             addSideEffects()
 
-            // mark first time has runned.
             val editor = prefs.edit()
             editor.putBoolean("firstTime", true)
             editor.apply()
         }
+    }
+
+    private fun initializeStetho() {
+        // Create an InitializerBuilder
+        val initializerBuilder = Stetho.newInitializerBuilder(this)
+
+        // Enable Chrome DevTools
+        initializerBuilder.enableWebKitInspector(
+                Stetho.defaultInspectorModulesProvider(this)
+        )
+
+        // Enable command line interface
+        initializerBuilder.enableDumpapp(
+                Stetho.defaultDumperPluginsProvider(this)
+        )
+
+        // Use the InitializerBuilder to generate an Initializer
+        val initializer = initializerBuilder.build()
+
+        // Initialize Stetho with the Initializer
+        Stetho.initialize(initializer)
     }
 
     private fun addDoctors() {
@@ -57,8 +76,6 @@ class App: Application() {
     }
 
     private fun addDiagnoses() {
-        val dbHandler = DBHandler.getInstance(this)
-
         DBHandler.getInstance(this).apply {
             addDiagnosis(Diagnosis(
                     "C16.0",

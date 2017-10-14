@@ -314,7 +314,7 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.query(TABLE_PATIENT, new String[] {
                 KEY_PATIENT_ID, KEY_PERSON_ID, KEY_DOCTOR_ID, KEY_BLOOD_TYPE, KEY_RH_FACTOR, KEY_LOCATION,
-                KEY_JOB, KEY_COMMENTS}, null, null, null, null, null);
+                KEY_JOB, KEY_COMMENTS}, null, null, null, null, null, null);
 
         if (cursor.moveToFirst()) {
             do {

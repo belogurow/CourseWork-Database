@@ -18,7 +18,6 @@ import com.alexbelogurow.dbcoursework.util.DBHandler
 import com.alexbelogurow.dbcoursework.util.NavigationDrawer
 import com.alexbelogurow.dbcoursework.model.Patient
 import com.alexbelogurow.dbcoursework.R
-import com.facebook.stetho.Stetho
 
 class ActivityPatient : AppCompatActivity() {
 
@@ -35,7 +34,6 @@ class ActivityPatient : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_patient)
-        initializeStetho()
 
         mRecyclerView = findViewById<View>(R.id.recyclerViewPatient) as RecyclerView
         mFabAddPatient = findViewById<View>(R.id.fabAddPatient) as FloatingActionButton
@@ -65,27 +63,6 @@ class ActivityPatient : AppCompatActivity() {
         patientList = dbHandler?.allPatients
         mAdapter = PatientAdapter(patientList, applicationContext)
         mRecyclerView?.adapter = mAdapter
-    }
-
-    private fun initializeStetho() {
-        // Create an InitializerBuilder
-        val initializerBuilder = Stetho.newInitializerBuilder(this)
-
-        // Enable Chrome DevTools
-        initializerBuilder.enableWebKitInspector(
-                Stetho.defaultInspectorModulesProvider(this)
-        )
-
-        // Enable command line interface
-        initializerBuilder.enableDumpapp(
-                Stetho.defaultDumperPluginsProvider(this)
-        )
-
-        // Use the InitializerBuilder to generate an Initializer
-        val initializer = initializerBuilder.build()
-
-        // Initialize Stetho with the Initializer
-        Stetho.initialize(initializer)
     }
 
     override fun onRestart() {
