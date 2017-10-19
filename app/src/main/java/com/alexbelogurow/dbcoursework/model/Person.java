@@ -6,6 +6,8 @@ import com.alexbelogurow.dbcoursework.R;
  * Created by alexbelogurow on 07.05.17.
  */
 
+
+
 public class Person {
     private Integer personID;
     private String fullName, birthDate, sex;

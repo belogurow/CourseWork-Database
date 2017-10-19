@@ -236,6 +236,21 @@ public class DBHandler extends SQLiteOpenHelper {
         return patientId;
     }
 
+    public void addPatientWithDoctor(Patient patient, Person personPatient, Doctor doctor, Person doctorPerson) {
+        Integer patientId = this.addPatient(patient, personPatient);
+        Integer doctorId = this.addDoctor(doctor, doctorPerson);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_DOCTOR_ID, doctorId);
+        db.update(TABLE_PATIENT,
+                contentValues,
+                KEY_PATIENT_ID + "=?",
+                new String[] {String.valueOf(patientId)});
+        db.close();
+    }
+
     public void addDoctorForPatient(Patient patient, Doctor doctor) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -380,7 +395,7 @@ public class DBHandler extends SQLiteOpenHelper {
     // =======================================================================
     // Work with TABLE_DOCTOR
     // =======================================================================
-    public void addDoctor(Doctor doctor, Person person) {
+    public Integer addDoctor(Doctor doctor, Person person) {
         SQLiteDatabase db = this.getWritableDatabase();
         Integer idPerson = addPerson(person, db);
 
@@ -389,10 +404,11 @@ public class DBHandler extends SQLiteOpenHelper {
         doctorValues.put(KEY_SPECIALIZATION, doctor.getSpecialization());
         doctorValues.put(KEY_PRACTICE_BEGAN_DATE, doctor.getPractiseBeganDate());
 
-        db.insert(TABLE_DOCTOR, null, doctorValues);
+        Integer doctorId = (int) db.insert(TABLE_DOCTOR, null, doctorValues);
         db.close();
 
         Log.d("Add new doctor", doctor.toString());
+        return doctorId;
     }
 
     public Doctor getDoctor(int id) {
