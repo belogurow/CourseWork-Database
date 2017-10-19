@@ -21,6 +21,7 @@ class App: Application() {
             addDiagnoses()
             addTreatments()
             addSideEffects()
+            addPatients()
 
             val editor = prefs.edit()
             editor.putBoolean("firstTime", true)
@@ -70,6 +71,42 @@ class App: Application() {
             addDoctor(
                     Doctor("Онколог-хирург", "7/2/1999"),
                     Person("Лазарев Андрей Кимович", "19/1/1959", "Male"))
+
+            addDoctor(
+                    Doctor("*", "25/1/2015"),
+                    Person("Куколевская Горислава Робертовна ", "26/4/1980", "Female"))
+
+            addDoctor(
+                    Doctor("*", "7/2/1999"),
+                    Person("Комаров Евлампий Тарасович", "18/9/1972", "Male"))
+
+            addDoctor(
+                    Doctor("*", "7/2/1999"),
+                    Person("Афанасьева Беатриса Владиславовна ", "7/5/1976", "Female"))
+
+            addDoctor(
+                    Doctor("*", "7/2/1999"),
+                    Person("Николаева Марианна Аркадьевна", "18/12/1962", "Female"))
+
+            addDoctor(
+                    Doctor("*", "7/2/1999"),
+                    Person("Журавлёв Карл Максович", "4/1/1980", "Male"))
+
+            addDoctor(
+                    Doctor("*", "7/2/1999"),
+                    Person("Демьянченко Амина Семеновна", "17/5/1969", "Female"))
+
+            addDoctor(
+                    Doctor("*", "7/2/1999"),
+                    Person("Макарова Алёна Борисовна", "28/6/1989", "Female"))
+
+            addDoctor(
+                    Doctor("*", "7/2/1999"),
+                    Person("Веселков Лазарь Николаевич", "14/11/1974", "Male"))
+
+            addDoctor(
+                    Doctor("*", "7/2/1999"),
+                    Person("Козлова Капитолина Степановна", "9/10/1968", "Female"))
 
             close()
         }
@@ -241,6 +278,10 @@ class App: Application() {
 //                    "Слабость, головокружение"
 //            ))
         }
+    }
+
+    private fun addPatients() {
+        
     }
 
 
