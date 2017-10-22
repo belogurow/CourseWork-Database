@@ -42,6 +42,8 @@ class ActivityTreatment : AppCompatActivity() {
         mFabAddTreatment = findViewById(R.id.fab_add_treatment)
         mRecyclerView = findViewById(R.id.recycler_treatment)
 
+        mFabAddTreatment?.hide()
+
         setSupportActionBar(mToolbar)
         supportActionBar?.title = getString(R.string.treatment)
 
