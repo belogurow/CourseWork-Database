@@ -142,7 +142,7 @@ class TreatmentAdapter(private var treatmentList: List<Treatment>,
                 if (!parent.isGroupExpanded(groupPosition)) {
                     holder.mExpandableListSideEffects?.layoutParams = LinearLayout.LayoutParams(
                             LayoutParams.MATCH_PARENT,
-                            200 + 140 * (holder.sideEffects?.size!!))
+                            200 + 200 * (holder.sideEffects?.size!!))
                 } else {
                     parent.layoutParams = LinearLayout.LayoutParams(
                             LayoutParams.MATCH_PARENT,

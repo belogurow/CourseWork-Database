@@ -213,17 +213,48 @@ class App: Application() {
     private fun addTreatments() {
         DBHandler.getInstance(this).apply {
             addTreatment(Treatment(
-                    "Искоренение самого диагноза",
-                    TreatmentType.Psychotherapeutic.type
-            ))
+                    "Непосредственное наблюдение",
+                    TreatmentType.Psychotherapeutic.type))
+
             addTreatment(Treatment(
-                    "Регулирование работы кардии желудка",
-                    TreatmentType.Medication.type
-            ))
+                    "Лечение туберкулёза медикаментами",
+                    TreatmentType.Medication.type))
+
             addTreatment(Treatment(
-                    "Уменьшение внутреннего брюшного давления в желудочно-кишечном тракте",
-                    TreatmentType.Psychotherapeutic.type
-            ))
+                    "Проведение нескольких тестов для проверки четкости зрения на каждый глаз",
+                    TreatmentType.Physiotherapeutic.type))
+
+            addTreatment(Treatment(
+                    "Электрокардиография",
+                    TreatmentType.Psychotherapeutic.type))
+
+            addTreatment(Treatment(
+                    "Эхокардиография",
+                    TreatmentType.Psychotherapeutic.type))
+
+            addTreatment(Treatment(
+                    "Анализ крови на кардиотропные белки",
+                    TreatmentType.Psychotherapeutic.type))
+
+            addTreatment(Treatment(
+                    "Госпитализация",
+                    TreatmentType.Physiotherapeutic.type))
+
+            addTreatment(Treatment(
+                    "Курс терапии",
+                    TreatmentType.Psychotherapeutic.type))
+
+            addTreatment(Treatment(
+                    "Хирургическое лечение",
+                    TreatmentType.Surgical.type))
+
+            addTreatment(Treatment(
+                    "Химиотерапия",
+                    TreatmentType.Physiotherapeutic.type))
+
+            addTreatment(Treatment(
+                    "Противовирусная терапия",
+                    TreatmentType.Psychotherapeutic.type))
 
             close()
         }
@@ -233,14 +264,25 @@ class App: Application() {
         DBHandler.getInstance(this).apply {
             addSideEffect(SideEffect(
                     2,
-                    "Препарат «Регидрон»",
-                    "Слабость, головокружение"
-            ))
-//            addSideEffect(SideEffect(
-//                    3,
-//                    "Препарат «Регидрон2»",
-//                    "Слабость, головокружение"
-//            ))
+                    "Препарат \"Рифампицин\"",
+                    "Внутривенное введение противопоказано при лёгочно-сердечной недостаточности и флебите"))
+
+            addSideEffect(SideEffect(
+                    2,
+                    "Препарат \"Изониазид\"",
+                    "Головная боль, головокружение, рвота"))
+
+            addSideEffect(SideEffect(
+                    5,
+                    "Противопоказания для \"Эхокардиографии\"",
+                    "Хронические курильщики, лица, страдающие бронхиальной астмой / хроническим бронхитом и некоторым другими заболеваниями дыхательной системы"))
+
+            addSideEffect(SideEffect(
+                    8,
+                    "Препарат \"Хлорамфеникол\"",
+                    "Крайне токсичен и часто оставляет тяжёлые побочные эффекты при применении внутрь"))
+
+            close()
         }
     }
 
@@ -249,57 +291,93 @@ class App: Application() {
             addPatientWithDoctor(
                     Patient("303426, г. Сысерть, ул. Вагонников 3-я, дом 22, квартира 267"),
                     Person("Васильев Алексей Кириллович", "13/4/1984", "Male"),
-                    Doctor("*", "25/1/2015"),
+                    Doctor("Фтизиатр", "25/1/2015"),
                     Person("Куколевская Горислава Робертовна ", "26/4/1980", "Female"))
+
+            addDiagnosisForPatient("A16.4", 1)
+            addDiagnosisForPatient("A18.0", 1)
+            addTreatmentForDiagnosis(1, "A16.4")
+            addTreatmentForDiagnosis(2, "A16.4")
+            addTreatmentForDiagnosis(1, "A18.0")
+            addTreatmentForDiagnosis(2, "A18.0")
+
 
             addPatientWithDoctor(
                     Patient("243322, г. Большая Глушица, ул. Базовая, дом 71, квартира 24"),
                     Person("Кочеткова Майя Егоровна", "24/5/1965", "Female"),
-                    Doctor("*", "7/2/1999"),
+                    Doctor("Офтальмолог", "1/3/2009"),
                     Person("Комаров Евлампий Тарасович", "18/9/1972", "Male"))
+
+            addDiagnosisForPatient("Z01.0", 2)
+            addTreatmentForDiagnosis(3, "Z01.0")
 
             addPatientWithDoctor(
                     Patient("143969, г. Ягодное, ул. Королёва, дом 50, квартира 196"),
                     Person("Дидиченко Елена Анатольевна", "4/11/1969", "Female"),
-                    Doctor("*", "7/2/1999"),
+                    Doctor("Кардиолог", "4/8/2011"),
                     Person("Афанасьева Беатриса Владиславовна ", "7/5/1976", "Female"))
+
+            addDiagnosisForPatient("Z03.4", 3)
+            addTreatmentForDiagnosis(4, "Z03.4")
+            addTreatmentForDiagnosis(5, "Z03.4")
+            addTreatmentForDiagnosis(6, "Z03.4")
 
             addPatientWithDoctor(
                     Patient("446731, г. Кондопога, ул. Бадюлина, дом 40, квартира 143"),
                     Person("Комаров Климент Владимирович", "8/2/1985", "Male"),
-                    Doctor("*", "7/2/1999"),
+                    Doctor("Гастроэнтеролог", "21/5/2017"),
                     Person("Николаева Марианна Аркадьевна", "18/12/1962", "Female"))
+
+            addDiagnosisForPatient("A01.0", 4)
+            addTreatmentForDiagnosis(7, "A01.0")
+            addTreatmentForDiagnosis(8, "A01.0")
+
 
             addPatientWithDoctor(
                     Patient("186801, г. Чернышковский, ул. Журавлёва, дом 13, квартира 227"),
                     Person("Давыдова Ольга Платоновна", "11/2/1979", "Female"),
-                    Doctor("*", "7/2/1999"),
+                    Doctor("Онколог", "29/5/2014"),
                     Person("Журавлёв Карл Максович", "4/1/1980", "Male"))
+
+            addDiagnosisForPatient("C30.1", 5)
+            addTreatmentForDiagnosis(9, "C30.1")
+            addTreatmentForDiagnosis(10, "C30.1")
+
 
             addPatientWithDoctor(
                     Patient("413809, г. Красное-на-Волге, ул. Авангардная, дом 25, квартира 149"),
                     Person("Петров Викторин Миронович", "21/4/1967", "Male"),
-                    Doctor("*", "7/2/1999"),
+                    Doctor("Гепатолог", "7/10/2013"),
                     Person("Демьянченко Амина Семеновна", "17/5/1969", "Female"))
+
+            addDiagnosisForPatient("B17.1", 6)
+            addTreatmentForDiagnosis(11, "B17.1")
 
             addPatientWithDoctor(
                     Patient("628634, г. Большая Мартыновка, ул. Базовая, дом 71, квартира 219"),
                     Person("Борисова Лия Юрьевна", "9/9/1976", "Female"),
-                    Doctor("*", "7/2/1999"),
+                    Doctor("Фтизиатр", "3/9/2004"),
                     Person("Макарова Алёна Борисовна", "28/6/1989", "Female"))
+
+            addDiagnosisForPatient("A18.0", 7)
+
 
             addPatientWithDoctor(
                     Patient("111538, г. Кондоль, ул. Бажова, дом 29, квартира 250"),
                     Person("Гусев Соломон Эдуардович", "18/5/1972", "Male"),
-                    Doctor("*", "7/2/1999"),
+                    Doctor("Офтальмолог", "15/1/2013"),
                     Person("Веселков Лазарь Николаевич", "14/11/1974", "Male"))
+
+            addDiagnosisForPatient("Z01.0", 8)
 
             addPatientWithDoctor(
                     Patient("172377, г. Дальнее, ул. Заречная, дом 1, квартира 268"),
                     Person("Назаров Милий Матвеевич", "17/1/1966", "Male"),
-                    Doctor("*", "7/2/1999"),
+                    Doctor("Кардиолог", "4/12/2014"),
                     Person("Козлова Капитолина Степановна", "9/10/1968", "Female"))
-            
+
+            addDiagnosisForPatient("Z03.4", 9)
+
             close()
         }
     }

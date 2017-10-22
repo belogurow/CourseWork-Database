@@ -90,7 +90,7 @@ class AddTreatmentsForDiagnosesActivity : AppCompatActivity() {
             R.id.menu_action_add_treatments  -> {
                 treatmentsList?.forEach {
                     if (it.isSelected) {
-                        dbHandler?.addTreatmentForDiagnosis(it, icd)
+                        dbHandler?.addTreatmentForDiagnosis(it.treatmentId, icd)
 
                         Snackbar.make(mCoordinatorLayout!!,
                                 getString(R.string.diagnosis_was_added),

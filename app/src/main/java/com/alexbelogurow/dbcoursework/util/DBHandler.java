@@ -389,6 +389,8 @@ public class DBHandler extends SQLiteOpenHelper {
                 " =?", new String[]{Integer.toString(patientId)});
         this.getWritableDatabase()
                 .delete(TABLE_PERSON, KEY_PERSON_ID + " =?", new String[] {Integer.toString(personId)});
+        this.getWritableDatabase()
+                .delete(TABLE_PATIENT_WITH_DIAGNOSIS, KEY_PATIENT_ID + " =?", new String[]{Integer.toString(patientId)});
         db.close();
     }
 
@@ -568,17 +570,17 @@ public class DBHandler extends SQLiteOpenHelper {
     // =======================================================================
     // Work with TABLE_PATIENT_WITH_DIAGNOSIS
     // =======================================================================
-    public void addDiagnosisForPatient(Diagnosis diagnosis, Integer patientId) {
+    public void addDiagnosisForPatient(String icd, Integer patientId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_PATIENT_ID, patientId);
-        values.put(KEY_ICD, diagnosis.getICD());
+        values.put(KEY_ICD, icd);
 
         db.insertWithOnConflict(TABLE_PATIENT_WITH_DIAGNOSIS, null, values, SQLiteDatabase.CONFLICT_IGNORE);
         db.close();
 
-        Log.d("Add diagnosis patient", diagnosis.getICD() + " " + patientId);
+        Log.d("Add diagnosis patient", icd + " " + patientId);
     }
 
     public List<Diagnosis> getDiagnosisByPatient(Patient patient) {
@@ -669,17 +671,17 @@ public class DBHandler extends SQLiteOpenHelper {
     // Work with TABLE_DIAGNOSIS_WITH_TREATMENTS
     // =======================================================================
 
-    public void addTreatmentForDiagnosis(Treatment treatment, String ICD) {
+    public void addTreatmentForDiagnosis(Integer treatmentId, String ICD) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_ICD, ICD);
-        values.put(KEY_TREATMENT_ID, treatment.getTreatmentId());
+        values.put(KEY_TREATMENT_ID, treatmentId);
 
         db.insertWithOnConflict(TABLE_DIAGNOSIS_WITH_TREATMENTS, null, values, SQLiteDatabase.CONFLICT_IGNORE);
         db.close();
 
-        Log.d("Add treatment for diag", treatment.getTreatmentId() + " " + ICD);
+        Log.d("Add treatment for diag", treatmentId + " " + ICD);
     }
 
     public List<Treatment> getTreatmentsByDiagnosis(Diagnosis diagnosis) {
