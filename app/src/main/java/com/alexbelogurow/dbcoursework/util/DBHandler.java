@@ -197,16 +197,18 @@ public class DBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.query(TABLE_PERSON, new String[] {
                 KEY_PERSON_ID, KEY_FULL_NAME, KEY_BIRTH_DATE, KEY_SEX}, KEY_PERSON_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
+
+        Person person = null;
+        if (cursor != null && cursor.moveToFirst()) {
+            person = new Person(Integer.parseInt(cursor.getString(0)),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3));
+
+            cursor.close();
         }
 
 
-        Person person = new Person(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1),
-                cursor.getString(2),
-                cursor.getString(3));
-        cursor.close();
         db.close();
         return person;
 
@@ -380,7 +382,7 @@ public class DBHandler extends SQLiteOpenHelper {
         return patientList;
     }
 
-    public void deletePatient(int patientId) {
+    public void deletePatientById(int patientId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         int personId = getPatient(patientId).getPersonID();
@@ -565,6 +567,14 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return diagnosisList;
+    }
+
+    public void deleteDiagnosis(String ICD) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        this.getWritableDatabase().delete(TABLE_DIAGNOSIS, KEY_ICD +
+                " =?", new String[]{ICD});
+        db.close();
     }
 
     // =======================================================================

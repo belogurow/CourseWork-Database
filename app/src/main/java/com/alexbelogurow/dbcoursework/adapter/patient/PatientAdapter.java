@@ -6,6 +6,9 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.support.v7.widget.helper.ItemTouchHelper.SimpleCallback;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +35,7 @@ import kotlin.text.Regex;
  * Created by alexbelogurow on 07.05.17.
  */
 
-public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientViewHolder> {
+public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientViewHolder>{
 
     // EXTRA
     private final String EXTRA_PATIENT_ID = "PATIENT_ID";
@@ -149,7 +152,4 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.PatientV
     public int getItemCount() {
         return patientList.size();
     }
-
-
-
 }

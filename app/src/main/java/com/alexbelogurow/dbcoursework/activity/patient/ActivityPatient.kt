@@ -9,6 +9,9 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.support.v7.widget.helper.ItemTouchHelper
+import android.support.v7.widget.helper.ItemTouchHelper.*
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.SearchView
@@ -35,6 +38,11 @@ class ActivityPatient : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_patient)
 
+        initializeViews()
+        initializeAdapter()
+    }
+
+    private fun initializeViews() {
         mRecyclerView = findViewById<View>(R.id.recyclerViewPatient) as RecyclerView
         mFabAddPatient = findViewById<View>(R.id.fabAddPatient) as FloatingActionButton
         mToolbar = findViewById<View>(R.id.toolbarPatient) as Toolbar
@@ -53,11 +61,29 @@ class ActivityPatient : AppCompatActivity() {
             val addPatientActivity = Intent(this, ActivityAddPatient::class.java)
             startActivity(addPatientActivity)
         }
-
-        initializeAdapter()
         NavigationDrawer(this, mToolbar, 0).setNavigationDrawer()
-    }
 
+//        val swipe = object : SimpleCallback(0, LEFT or RIGHT) {
+//            override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
+//                return false
+//            }
+//
+//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+//                Log.d("swiped", viewHolder?.adapterPosition?.toString())
+//                val position = viewHolder?.adapterPosition!!
+//
+//                dbHandler?.deletePatientById(patientList?.get(position)?.patientID!!)
+//                //patientList?.drop(position)
+//                //mAdapter?.updateList(patientList?.)
+//                mAdapter?.notifyItemRemoved(position)
+//                //mAdapter?.on
+//
+//                //mAdapter?.updateList(patientList?.drop(viewHolder?.adapterPosition!!))
+//            }
+//
+//        }
+//        ItemTouchHelper(swipe).attachToRecyclerView(mRecyclerView)
+    }
 
     private fun initializeAdapter() {
         patientList = dbHandler?.allPatients

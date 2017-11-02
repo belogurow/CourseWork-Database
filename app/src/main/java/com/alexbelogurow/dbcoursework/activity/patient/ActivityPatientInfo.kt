@@ -97,7 +97,7 @@ class ActivityPatientInfo : AppCompatActivity() {
                 return true
             }
             R.id.action_menu_patient_delete     -> {
-                dbHandler?.deletePatient(patientId!!)
+                dbHandler?.deletePatientById(patientId!!)
                 // TODO ADD ALERT DIALOG
                 onBackPressed()
                 return true

@@ -39,8 +39,9 @@ class DiagnosesAdapter(private var diagnosesList: List<Diagnosis>,
     }
     fun updateList(newDiagnosesList: List<Diagnosis>) {
         diagnosesList = newDiagnosesList
-        notifyDataSetChanged()
     }
+
+    fun getList() = diagnosesList;
 
     class DiagnosesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var mCardView: CardView? = null

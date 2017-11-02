@@ -9,6 +9,8 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.Log
 import android.view.Menu
 import android.widget.SearchView
 import com.alexbelogurow.dbcoursework.adapter.diagnosis.DiagnosesAdapter
@@ -56,6 +58,26 @@ class ActivityDiagnoses : AppCompatActivity() {
 
         mRecyclerView?.layoutManager = LinearLayoutManager(this)
         mRecyclerView?.setHasFixedSize(true)
+
+        val swipe = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+                Log.d("swiped", viewHolder?.adapterPosition?.toString())
+                val position = viewHolder?.adapterPosition!!
+
+                dbHandler?.deleteDiagnosis(diagnosisList?.get(position)?.icd)
+                diagnosisList = dbHandler?.allDiagnosis
+                mAdapter?.updateList(diagnosisList!!)
+
+                mAdapter?.notifyItemRemoved(position)
+                mAdapter?.notifyItemRangeChanged(position, diagnosisList?.size!! - position)
+            }
+
+        }
+        ItemTouchHelper(swipe).attachToRecyclerView(mRecyclerView)
     }
 
     private fun initializeListeners() {
